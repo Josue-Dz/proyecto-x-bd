@@ -1,20 +1,19 @@
-
-import './App.css'
-import { Route, Routes } from 'react-router-dom'
-import HomePage from './pages/HomePage'
-import Authentication from './authentication/Authentication'
+import './App.css';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import PaginaPrincipal from './pages/PaginaPrincipal';
+import Autentificacion from './autentificacion/Autentificacion';
 
 function App() {
+  const isAuthenticated = true; 
 
   return (
-    <div>
-     <Routes>
-        <Route path="/" element={true?<HomePage/>:<Authentication/>}>
-
-        </Route>
-     </Routes>
-    </div>
-  )
+      <Routes>
+        <Route
+          path="/"
+          element={isAuthenticated ? <PaginaPrincipal /> : <Autentificacion />}
+        />
+      </Routes>
+  );
 }
 
-export default App
+export default App;
