@@ -1,6 +1,7 @@
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
 import { Avatar, Button, Menu, MenuItem } from "@mui/material";
+import Perfil from "../components/perfil/Perfil";
 
 import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
@@ -70,7 +71,7 @@ const menuNav = [
   {
     title: "Perfil",
     icon: <PermIdentityRoundedIcon />,
-    path: "/home",
+    path: "/perfil",
   },
   {
     title: "Mas opciones",

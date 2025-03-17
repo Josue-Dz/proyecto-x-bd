@@ -12,11 +12,17 @@ import BookmarkBorderRoundedIcon from "@mui/icons-material/BookmarkBorderRounded
 import FileUploadRoundedIcon from "@mui/icons-material/FileUploadRounded";
 import BookmarkRoundedIcon from "@mui/icons-material/BookmarkRounded";
 
+import ModalResponder from "../components/perfil/ModalResponder";
+
 const Tweet = () => {
   const navigate = useNavigate();
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+
+  const [openReplyModal, setOpenReplyModal] = React.useState(false);
+  const handleOpenReplyModal = () => setOpenReplyModal(true);
+  const handleCloseReplyModal = () => setOpenReplyModal(false);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -30,18 +36,16 @@ const Tweet = () => {
     handleClose();
   };
 
-  const handleOpenReplyModal = () => {};
+  const handleCreateRepost = () => { };
 
-  const handleCreateRepost = () => {};
+  const handleLikePost = () => { };
 
-  const handleLikePost = () => {};
+  const handleBookmarkPost = () => { };
 
-  const handleBookmarkPost = () => {};
-
-  const handleSharePost = () => {};
+  const handleSharePost = () => { };
 
   return (
-    <div className=" pb-6 hover:bg-gray-100 ">
+    <React.Fragment className=" pb-6 hover:bg-gray-100 ">
       <div className="flex content-start p-3 ">
         <Avatar
           onClick={() => navigate(`/perfil/${6}`)}
@@ -83,18 +87,18 @@ const Tweet = () => {
           <MenuItem onClick={handleDeleteTweet}>Editar</MenuItem>
         </Menu>
       </div>
-
-      <div className="cursor-pointer p-3  w-full flex flex-col items-center">
+      
+      <div onClick={() => navigate(`/post/${3}`)} className="cursor-pointer p-3  w-full flex flex-col items-center">
         <img
           className="w-4/5 border border-gray-400  rounded-md"
           src="https://external-preview.redd.it/3_9hIPmOuH0gCDCbcAbmz7SPxmEjzWHaNbJJdiHXdBc.jpg?auto=webp&s=eb81d62bfd6d58fda742517c9d98ec2bef314b54"
           alt=""
         />
+
         <div className="space-x-3 w-4/5 pt-3 flex items-center text-gray-600">
           <div
-            className={`${
-              false ? "text-[#1DA1F2]" : "text-gray-300"
-            } space-x-3 flex items-center`}
+            className={`${false ? "text-[#1DA1F2]" : "text-gray-300"
+              } space-x-3 flex items-center`}
           >
             <ChatBubbleOutlineRoundedIcon
               className="cursor-pointer"
@@ -105,9 +109,8 @@ const Tweet = () => {
           </div>
 
           <div
-            className={`${
-              false ? "text-[#00BA7C]" : "text-gray-300"
-            } space-x-3 flex items-center`}
+            className={`${false ? "text-[#00BA7C]" : "text-gray-300"
+              } space-x-3 flex items-center`}
           >
             <RepeatRoundedIcon
               className="cursor-pointer"
@@ -118,9 +121,8 @@ const Tweet = () => {
           </div>
 
           <div
-            className={`${
-              true ? "text-[#F91880]" : "text-gray-300"
-            } space-x-3 flex items-center`}
+            className={`${true ? "text-[#F91880]" : "text-gray-300"
+              } space-x-3 flex items-center`}
           >
             {false ? (
               <FavoriteBorderRoundedIcon
@@ -138,9 +140,8 @@ const Tweet = () => {
           </div>
 
           <div
-            className={`${
-              true ? "text-[#1DA1F2]" : "text-gray-600"
-            } space-x-3 flex items-center`}
+            className={`${true ? "text-[#1DA1F2]" : "text-gray-600"
+              } space-x-3 flex items-center`}
           >
             <BarChartRoundedIcon
               className="cursor-pointer"
@@ -151,9 +152,8 @@ const Tweet = () => {
           </div>
           <div class="flex-grow"></div>
           <div
-            className={`${
-              true ? "text-[#1DA1F2]" : "text-gray-600"
-            } space-x-3 flex items-center`}
+            className={`${true ? "text-[#1DA1F2]" : "text-gray-600"
+              } space-x-3 flex items-center`}
           >
             {true ? (
               <BookmarkBorderRoundedIcon
@@ -169,9 +169,8 @@ const Tweet = () => {
           </div>
 
           <div
-            className={`${
-              true ? "text-[#1DA1F2]" : "text-gray-600"
-            } space-x-3 flex items-center`}
+            className={`${true ? "text-[#1DA1F2]" : "text-gray-600"
+              } space-x-3 flex items-center`}
           >
             <FileUploadRoundedIcon
               className="cursor-pointer"
@@ -180,7 +179,10 @@ const Tweet = () => {
           </div>
         </div>
       </div>
-    </div>
+      <section>
+        <ModalResponder open={openReplyModal} handleClose={handleCloseReplyModal}/>
+      </section>
+    </React.Fragment>
   );
 };
 
