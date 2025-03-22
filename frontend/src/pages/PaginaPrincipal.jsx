@@ -13,6 +13,24 @@ import Mensajes from "../components/mensajes/Mensajes";
 import { TarjetaSeguimientoX } from "../components/seguimiento/TarjetaSeguimientoX";
 import VerChat from "../components/mensajes/VerChat";
 
+const users = [
+  {
+      name: 'Miguel Ángel Durán',
+      userName: 'midudev',
+      isFollowing: true
+  },
+  {
+      name: 'Starlink',
+      userName: 'Starlink',
+      isFollowing: false
+  },
+  {
+      name: 'Tesla AI',
+      userName: 'Tesla_AI',
+      isFollowing: true
+  }
+]
+
 const PaginaPrincipal = () => {
   return (
     <Grid container className="justify-between w-full">
@@ -35,12 +53,13 @@ const PaginaPrincipal = () => {
       <Routes>
         <Route path="/" element={<Tendencias />}></Route>
         <Route path="/inicio" element={<Tendencias />}></Route>
-        <Route path="/explorar" element={<TarjetaSeguimientoX />}></Route>
+        <Route path="/explorar" element={<Tendencias />}></Route>
         <Route path="/notificaciones" element={<Tendencias />}></Route>
         <Route path="/mensajes" element={<VerChat />}></Route>
         <Route path="/comunidades" element={<Tendencias />}></Route>
         <Route path="/perfil/:id" element={<Tendencias />}></Route>
       </Routes> 
+
       </Grid>
     </Grid>
   );

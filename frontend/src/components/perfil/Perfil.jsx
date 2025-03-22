@@ -7,7 +7,7 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 import ModalPerfil from './ModalPerfil';
-import Tweet from '../../pages/Post';
+import Post from '../../pages/Post';
 import { useTheme } from '../../context/ThemeContext';
 
 
@@ -211,8 +211,8 @@ const Perfil = () => {
 
                                 <Tab label="Me gusta" value="6" 
                                     sx={{ textTransform: 'none', 
-                                        fontWeight: tabValue === "3" ? 'bold' : 'normal',
-                                        color: tabValue === "3" ? 'black' : 'gray',
+                                        fontWeight: tabValue === "6" ? 'bold' : 'normal',
+                                        color: tabValue === "6" ? 'black' : 'gray',
                                         outline: 'none',  
                                         '&:focus': {
                                         outline: 'none',  
@@ -225,7 +225,7 @@ const Perfil = () => {
                             </TabList>
                         </Box>
                         <TabPanel value="1">
-                            {[1, 1, 1, 1].map((item) => <Tweet />)}
+                            {[1, 1, 1, 1].map((item) => <Post />)}
                         </TabPanel>
                         <TabPanel value="2">Respuestas</TabPanel>
                         <TabPanel value="3">Destacados</TabPanel>

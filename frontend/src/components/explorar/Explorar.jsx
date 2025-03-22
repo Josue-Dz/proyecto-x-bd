@@ -4,6 +4,7 @@ import { TabContext, TabList, TabPanel } from '@mui/lab';
 
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
+import {  TarjetaSeguimientoX } from '../seguimiento/TarjetaSeguimientoX'
 
 const Explorar = () => {
 
@@ -16,7 +17,7 @@ const Explorar = () => {
   return (
     <div className='border-gray-200 border-[1px] h-full'>
 
-        <div className='py-1 sticky top'>
+        <div className='py-1 sticky top-0'>
             <div className='relative flex items-center mx-3.5'>
                 <input type='text' placeholder="Buscar" className='py-3 rounded-full text-gray-500 w-full pl-12 border border-gray-300' />
 

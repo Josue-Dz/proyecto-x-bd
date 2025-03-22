@@ -17,7 +17,8 @@ const Mensajes = () => {
         </div>
 
         <div className='relative flex items-center mx-3.5'>
-            <input type='text' placeholder="Buscar Mensajes Directos" className='py-3 rounded-full text-gray-500 w-full pl-12 border border-gray-300' />
+            <input type='text' placeholder="Buscar Mensajes Directos" 
+              className='py-3 rounded-full text-gray-500 w-full pl-12 border border-gray-300' />
 
             <div className='absolute top-0 left-0 pl-3 pt-3'>
                 <SearchRoundedIcon className='text-gray-500' />

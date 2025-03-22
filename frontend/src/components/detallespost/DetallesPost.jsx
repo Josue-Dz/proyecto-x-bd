@@ -23,7 +23,7 @@ export const DetallesPost = () => {
             </section>
 
             <section>
-                <Tweet />
+                <Post />
                 <Divider sx={{margin:"2rem 0rem"}}/>
             </section>
 
