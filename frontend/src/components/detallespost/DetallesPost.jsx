@@ -4,15 +4,18 @@ import { Divider } from '@mui/material';
 
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace'
 import Tweet from '../../pages/Tweet';
+import { useTheme } from '../../context/ThemeContext';
 
 export const DetallesPost = () => {
     const navigate = useNavigate();
     const handleBack = () => navigate(-1);
+    const { isDarkMode } = useTheme();
 
     return (
         <React.Fragment>
 
-            <section className={`bg-white z-50 flex items-center sticky top-0 bg-opacity-95`}>
+            <section className={`z-50 flex items-center sticky top-0 
+                ${ isDarkMode ? "transparencia-darkmode" : "transparencia-lightmode" }`}>
 
                 <KeyboardBackspaceIcon className='cursor-pointer' onClick={handleBack} />
                 <h2 className='ml-5 py-5 text-xl font-bold opacity-90'>Post</h2>

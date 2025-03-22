@@ -8,14 +8,14 @@ import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 import ModalPerfil from './ModalPerfil';
 import Tweet from '../../pages/Tweet';
-import { useTheme } from '@mui/material/styles';
+import { useTheme } from '../../context/ThemeContext';
 
 
 
 const Perfil = () => {
     const navegar = useNavigate();
     const [tabValue, setTabValue] = useState("1");
-    const theme = useTheme();
+    const { isDarkMode } = useTheme();
 
     const [openPerfilModal, setOpenPerfilModal] = useState(false);
     const handleOpenPerfilModal = () => setOpenPerfilModal(true);
@@ -36,7 +36,7 @@ const Perfil = () => {
     return (
 
         <div className="">
-            <section className={`bg-white z-50 flex items-center sticky top-0 bg-opacity-95`}>
+            <section className={`z-50 flex items-center sticky top-0  ${isDarkMode ? "transparencia-darkmode" : "transparencia-lightmode"}`}>
                 <KeyboardBackspaceIcon className="cursor-pointer" onClick={handleBack} />
                 <h2 className="ml-5 py-5 text-sl font-bold opacity-90">Test User</h2>
             </section>

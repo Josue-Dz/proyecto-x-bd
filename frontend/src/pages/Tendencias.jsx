@@ -1,6 +1,6 @@
+import '../App.css'
 import React from 'react'
-import { useState, useEffect } from 'react';
-
+import { useTheme } from '../context/ThemeContext'
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import Brightness4RoundedIcon from '@mui/icons-material/Brightness4Rounded';
 import MoreHorizRoundedIcon from '@mui/icons-material/MoreHorizRounded';
@@ -8,14 +8,32 @@ import MoreHorizRoundedIcon from '@mui/icons-material/MoreHorizRounded';
 import { Button } from '@mui/material';
 import ModalSuscripcion from '../components/modalsuscripcion/ModalSuscripcion';
 
-const Tendencias = ({toggleTheme}) => {
+import { TarjetaSeguimientoX } from '../components/seguimiento/TarjetaSeguimientoX';
+
+const users = [
+    {
+        name: 'Miguel Ángel Durán',
+        userName: 'midudev',
+        isFollowing: true
+    },
+    {
+        name: 'Starlink',
+        userName: 'Starlink',
+        isFollowing: false
+    },
+    {
+        name: 'Tesla AI',
+        userName: 'Tesla_AI',
+        isFollowing: true
+    }
+]
+
+const Tendencias = () => {
+    const {isDarkMode, toggleTheme} = useTheme();
     const [openModalSuscripcion, setOpenModalSuscripcion] = React.useState(false);
     const handleOpenModalSuscripcion = () => setOpenModalSuscripcion(true);
     const handleCloseModalSuscripcion = () => setOpenModalSuscripcion(false);
 
-    const handleChangeTheme = () => {
-
-    }
     return (
         <div className='py-1 sticky top'>
             <div className='relative flex items-center'>
@@ -25,7 +43,7 @@ const Tendencias = ({toggleTheme}) => {
                 <div className='absolute top-0 left-0 pl-3 pt-3'>
                     <SearchRoundedIcon className='text-gray-500' />
                 </div>
-                <Brightness4RoundedIcon className='ml-3 cursor-pointer' onClick={handleChangeTheme} />
+                <Brightness4RoundedIcon className='ml-3 cursor-pointer' onClick={toggleTheme} />
             </div>
 
             <section className='my-5 justify-items-start'>
@@ -53,8 +71,23 @@ const Tendencias = ({toggleTheme}) => {
                         <MoreHorizRoundedIcon />
                     </div>
                 </div>)}
-
+                <span className="text-left texto-especial">Mostrar más</span>
             </section>
+
+            <section className='mt-5 flex flex-col gap-3'>
+                <h2 className='text-x1 font-bold text-left'>A quién seguir</h2>
+                
+                    {
+                        users.map(user => {
+                            const { name, userName, isFollowing } = user
+                            return (
+                                <TarjetaSeguimientoX key={userName} name={name} userName={userName} initialIsFollowing={isFollowing} />
+                            )
+                        })
+                    }
+                <span className='mt-5 text-left texto-especial'>Mostrar más</span>
+            </section>
+
             <section>
                 <ModalSuscripcion open={openModalSuscripcion} handleClose={handleCloseModalSuscripcion} />
             </section>

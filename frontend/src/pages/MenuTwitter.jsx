@@ -1,6 +1,7 @@
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
-import { Avatar, Button, Menu, MenuItem } from "@mui/material";
+import { Avatar, Button, Menu, MenuItem} from "@mui/material";
+import { useTheme } from '../context/ThemeContext';
 import Perfil from "../components/perfil/Perfil";
 
 import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
@@ -82,6 +83,7 @@ const menuNav = [
 
 const MenuTwitter = () => {
   const navigate = useNavigate();
+  const { isDarkMode, toggleTheme } = useTheme();
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -108,8 +110,9 @@ const MenuTwitter = () => {
             className=" w-1/6 pb-8
             r-4qtqp9 r-yyyyoo r-dnmrzs r-bnwqim r-lrvibr r-m6rgpd r-yc9v9c r-18jsvk2 r-16y2uox r-8kz0gk"
           >
-            <g>
-              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path>
+            <g alt="logo X" className={isDarkMode ? "fill-white" : "fill-dark"}>
+              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 
+                21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path>
             </g>
           </svg>
 
@@ -136,7 +139,8 @@ const MenuTwitter = () => {
                 width: "100%",
                 borderRadius: "29px",
                 py: "15px",
-                bgcolor: "#000000",
+                bgcolor: isDarkMode ? "#ffffff" : "#000000",
+                color: isDarkMode ? "#000000" : "#ffffff",
               }}
               variant="contained"
             >

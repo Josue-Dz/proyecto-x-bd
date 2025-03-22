@@ -5,25 +5,27 @@ import Modal from '@mui/material/Modal';
 import CloseIcon from '@mui/icons-material/Close';
 import { Avatar, IconButton, TextField } from '@mui/material';
 import { useFormik } from 'formik';
-import { useState } from 'react'
+import { useState } from 'react';
+import { useTheme } from '../../context/ThemeContext';
 
 
-const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 600,
-    bgcolor: 'background.paper',
-    border: "none",
-    boxShadow: 24,
-    p: 4,
-    outline: "none",
-    borderRadius: 4
-};
-
-export default function ModalPerfil({open, handleClose}) {
+export default function ModalPerfil({ open, handleClose }) {
     const [uploading, setUploading] = useState(false);
+    const { isDarkMode } = useTheme();
+
+    const style = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: 600,
+        bgcolor: isDarkMode ? 'rgba(0, 0, 0, 0.9)' : 'background.paper',
+        border: "none",
+        boxShadow: 24,
+        p: 4,
+        outline: "none",
+        borderRadius: 4
+    };
 
     const handleSubmit = (values) => {
         console.log("Submit", values);
@@ -52,7 +54,7 @@ export default function ModalPerfil({open, handleClose}) {
 
     return (
         <div>
-            {/* <Button onClick={handleOpen}>Open modal</Button> */}
+
             <Modal
                 open={open}
                 onClose={handleClose}
@@ -62,18 +64,24 @@ export default function ModalPerfil({open, handleClose}) {
                 <Box sx={style}>
                     <form onSubmit={formik.handleSubmit}>
 
-                        <div className="flex items-center justify-between">
+                        <div className="flex items-center justify-between mb-3">
                             <div className="flex items-center space-x-3">
 
-                                <IconButton onClick={handleClose} aria-label="cerrar">
+                                <IconButton sx={{ color: isDarkMode ? "white" : "black" }} onClick={handleClose} aria-label="cerrar">
                                     <CloseIcon />
                                 </IconButton>
 
-                                <p className="text-black">Editar Perfil</p>
+                                <p className={isDarkMode ? "dark:text-white" : "text-black"}>Editar Perfil</p>
 
                             </div>
 
-                            <Button type='submit'>Guardar</Button>
+                            <Button sx={{
+                                borderRadius: "999px",
+                                py: "6px",
+                                bgcolor: isDarkMode ? "#ffffff" : "#000000",
+                                color: isDarkMode ? "#000000" : "#ffffff",
+                            }}
+                                type='submit' >Guardar</Button>
                         </div>
 
                         <div className="overflow-y-scroll overflow-x-hidden h-[80vh]">
@@ -96,12 +104,12 @@ export default function ModalPerfil({open, handleClose}) {
 
                                 <div className="w-full transform -translate-y-20 ml-4 h-[6rem]">
                                     <div className="relative">
-                                        <Avatar 
-                                            sx={{width: "10rem", height:"10rem", border: "4px solid white"}}
+                                        <Avatar
+                                            sx={{ width: "10rem", height: "10rem", border: "4px solid white" }}
                                             src="https://cdn.pixabay.com/photo/2025/01/08/19/02/border-collie-9319990_1280.jpg"
                                             alt="Imagen del perfil"
                                         />
-                                        <input 
+                                        <input
                                             className="absolute top-0 left-0 w-[10rem] h-full opacity-0 cursor-pointer"
                                             type="file"
                                             name="imagePerfil"
@@ -117,6 +125,7 @@ export default function ModalPerfil({open, handleClose}) {
 
                                 <div className="mt-1">
                                     <TextField
+                                        className="bg-white"
                                         id="nombre"
                                         name="nombre"
                                         label="Nombre"
@@ -130,6 +139,7 @@ export default function ModalPerfil({open, handleClose}) {
 
                                 <div>
                                     <TextField
+                                        className="bg-white"
                                         id="biografia"
                                         name="biografia"
                                         label="Biografía"
@@ -145,6 +155,7 @@ export default function ModalPerfil({open, handleClose}) {
 
                                 <div>
                                     <TextField
+                                        className="bg-white"
                                         id="ubicacion"
                                         name="ubicacion"
                                         label="Ubicación"
@@ -158,6 +169,7 @@ export default function ModalPerfil({open, handleClose}) {
 
                                 <div>
                                     <TextField
+                                        className="bg-white"
                                         id="sitioweb"
                                         name="sitioweb"
                                         label="Sitio Web"
@@ -170,12 +182,17 @@ export default function ModalPerfil({open, handleClose}) {
                                 </div>
 
                                 <div className="my-3">
-                                    <p className="text-lg text-gray-600">Fecha de nacimiento . Editar</p>
-                                    <p className="text-2xl text-black">10 de Mayo de 1970</p>
+                                    <p className={`text-lg  
+                                        ${isDarkMode ? "dark:text-gray-400" : "text-gray-600"}`}>Fecha de nacimiento ・
+                                        <span className="texto-especial">Editar</span>
+                                    </p>
+                                    <p className={`text-2xl ${isDarkMode ? "dark:text-white" : "text-black"}`}>10 de Mayo de 1970</p>
+                                </div>
+                                <div className={isDarkMode ? "dark:text-white" : "text-black"}>
+                                    <p className="py- text-lg">Crear biografía ampliada</p>
+                                    <p className="py- text-lg">Cambiar a profesional</p>
                                 </div>
 
-                                <p className="py- text-lg text-black">Crear biografía ampliada</p>
-                                <p className="py- text-lg text-black">Cambiar a profesional</p>
 
                             </div>
 

@@ -7,7 +7,7 @@ import { Routes, Route } from "react-router-dom";
 import Perfil from "../components/perfil/Perfil";
 import DetallesPost from "../components/detallespost/DetallesPost";
 
-const PaginaPrincipal = ({theme, toggleTheme}) => {
+const PaginaPrincipal = () => {
   return (
     <Grid container className="px-5 justify-between">
       <Grid item xs={0} md={2.5} className="hidden md:block w-full relative">
@@ -18,15 +18,14 @@ const PaginaPrincipal = ({theme, toggleTheme}) => {
           <Route path="/" element={<Feed />}></Route>
           <Route path="/inicio" element={<Feed />}></Route>
           <Route path="/perfil/:id" element={<Perfil />}></Route>
-          <Route path="/post/:id" element={<DetallesPost />}></Route>
+          <Route path="/post/:id" element={<DetallesPost/>}></Route>
         </Routes>
       </Grid>
       <Grid item xs={0} md={2.5} className="hidden md:block w-full relative">
-        <Tendencias />
+        <Tendencias/>
       </Grid>
     </Grid>
   );
 };
 
 export default PaginaPrincipal;
-
