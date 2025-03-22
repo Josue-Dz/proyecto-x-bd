@@ -63,6 +63,7 @@ const Tweet = () => {
             />
             <span className="font-normal text-gray-600 text-sm">@proyectobd1 · Mar 14</span>
           </div>
+          <p className="mb-2 p-0">Gato en una computadora</p>
         </div>
         <div class="flex-grow"></div>
         <Button
@@ -105,7 +106,6 @@ const Tweet = () => {
               onClick={handleOpenReplyModal}
             />
             <p>10 </p>
-            {/* <p>10 comentarios</p> */}
           </div>
 
           <div
@@ -117,7 +117,6 @@ const Tweet = () => {
               onClick={handleCreateRepost}
             />
             <p>10</p>
-            {/* <p>10 reposteos</p> */}
           </div>
 
           <div
@@ -136,7 +135,6 @@ const Tweet = () => {
               />
             )}
             <p>10 </p>
-            {/* <p>10 likes</p> */}
           </div>
 
           <div
@@ -148,7 +146,6 @@ const Tweet = () => {
               onClick={handleOpenReplyModal}
             />
             <p>10 </p>
-            {/* <p>10 visualizaciones</p> */}
           </div>
           <div class="flex-grow"></div>
           <div

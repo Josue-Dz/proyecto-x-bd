@@ -45,16 +45,6 @@ const menuNav = [
     path: "/grok",
   },
   {
-    title: "Guardados",
-    icon: <BookmarkBorderRoundedIcon />,
-    path: "/guardados",
-  },
-  {
-    title: "Trabajos",
-    icon: <WorkOutlineRoundedIcon />,
-    path: "/trabajos",
-  },
-  {
     title: "Comunidades",
     icon: <PeopleOutlineRoundedIcon />,
     path: "/comunidades",
@@ -103,11 +93,11 @@ const MenuTwitter = () => {
   return (
     <div className="h-screen sticky top-0">
       <div>
-        <div className="py-5">
+        <div className="py-2">
           <svg
             viewBox="0 0 24 24"
             aria-hidden="true"
-            className=" w-1/6 pb-8
+            className=" w-1/7 pl-2 pb-4
             r-4qtqp9 r-yyyyoo r-dnmrzs r-bnwqim r-lrvibr r-m6rgpd r-yc9v9c r-18jsvk2 r-16y2uox r-8kz0gk"
           >
             <g alt="logo X" className={isDarkMode ? "fill-white" : "fill-dark"}>
@@ -116,11 +106,11 @@ const MenuTwitter = () => {
             </g>
           </svg>
 
-          <div className="space-y-6">
+          <div className="space-y-0">
             {menuNav.map((item) => (
               <div
                 key={item.path}
-                className="cursor-pointer flex space-x-3 items-center"
+                className="cursor-pointer flex space-x-3 items-center hover:bg-gray-200 rounded-4xl px-2 py-2 transition"
                 onClick={() =>
                   item.title === "Perfil"
                     ? navigate(`/perfil/${5}`)
@@ -128,19 +118,21 @@ const MenuTwitter = () => {
                 }
               >
                 {item.icon}
-                <p className="text-x1">{item.title}</p>
+                <p className="text-lg font-normal text-left truncate w-[150px]">{item.title}</p>
               </div>
             ))}
           </div>
 
-          <div className="py-10">
-            <Button
+          <div className="pb-2">
+            <Button 
               sx={{
                 width: "100%",
                 borderRadius: "29px",
-                py: "15px",
+                py: "10px",
                 bgcolor: isDarkMode ? "#ffffff" : "#000000",
                 color: isDarkMode ? "#000000" : "#ffffff",
+                textTransform: "none",
+                my: 2
               }}
               variant="contained"
             >
@@ -150,7 +142,7 @@ const MenuTwitter = () => {
         </div>
       </div>
 
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between hover:bg-gray-200 rounded-4xl px-2 py-4 transition w-full group">
         <div className="flex items-center space-x-3">
           <Avatar
             alt="username"
@@ -158,18 +150,19 @@ const MenuTwitter = () => {
           />
         </div>
 
-        <div>
-          <span>Ronny, José Daniel y Aída</span>
-          <span className="opacity-70">@proyectoBD1</span>
+        <div className="flex flex-col ml-2">
+          <span className="font-bold text-left truncate w-[150px] text-sm">Ronny, José Daniel y Aída</span>
+          <span className="text-left text-sm opacity-70">@proyectoBD1</span>
         </div>
-        <Button
-          id="basic-button"
+        <Button 
+          disableRipple
           aria-controls={open ? "basic-menu" : undefined}
           aria-haspopup="true"
           aria-expanded={open ? "true" : undefined}
           onClick={handleClick}
+          className="hover:bg-gray-200 rounded-4xl p-2 !bg-transparent shadow-none"
+          endIcon={<MoreHorizIcon />}
         >
-          <MoreHorizIcon />
         </Button>
         <Menu
           id="basic-menu"

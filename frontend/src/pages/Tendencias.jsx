@@ -35,8 +35,8 @@ const Tendencias = () => {
     const handleCloseModalSuscripcion = () => setOpenModalSuscripcion(false);
 
     return (
-        <div className='py-1 sticky top'>
-            <div className='relative flex items-center'>
+        <div className='py-1 sticky top-0'>
+            <div className='relative flex items-center '>
 
                 <input type='text' placeholder="Buscar" className='py-3 rounded-full text-gray-500 w-full pl-12 border border-gray-300' />
 
@@ -47,28 +47,30 @@ const Tendencias = () => {
             </div>
 
             <section className='my-5 justify-items-start'>
-                <h2 className='text-x1 font-bold text-left'>Suscríbete a Premium</h2>
+                <h2 className='text-lg font-bold text-left'>Suscríbete a Premium</h2>
                 <div>
-                    <p className='my-2 text-left'>Suscríbete para desbloquear nuevas funciones y, si eres elegible,
+                    <p className='my-2 text-left text-xs'>Suscríbete para desbloquear nuevas funciones y, si eres elegible,
                         recibir un pago de cuota de ingresos.
                     </p>
                 </div>
                 <div>
-                    <Button onClick={handleOpenModalSuscripcion} variant='contained' sx={{ padding: "10px", paddingX: "20px", borderRadius: "25px", position: "left" }}>
+                    <Button className="normal-case" onClick={handleOpenModalSuscripcion} variant='contained' sx={{ fontWeight: "bold", bgcolor: "#1d9bf0", textTransform: "none", padding: "5px", paddingX: "20px", borderRadius: "25px", position: "left" }}>
                         Suscribirse
                     </Button>
                 </div>
             </section>
 
             <section className='mt-7 space-y-5 justify-items-start w-full'>
-                <h2 className='font-bold text-x1 py-1 w-full text-left'>Qué está pasando</h2>
+                <h2 className='font-bold text-lg py-1 w-full text-left'>Qué está pasando</h2>
 
-                {[1, 1, 1].map((item) => <div className='flex w-full justify-items-start'>
-                    <div className='w-full justify-items-start'>
-                        <p className='text-sm'>Ejemplo · Tendencia</p>
-                        <p className='font-bold'>Bases de Datos 1</p>
-                        <p className='text-sm'>64,5 mil publicaciones</p>
-                        <MoreHorizRoundedIcon />
+                {[1, 1, 1].map((item) => <div className='flex w-full'>
+                    <div className="w-full justify-items-start">
+                        <p className="text-xs">Ejemplo · Tendencia</p>
+                            <div className="flex items-center justify-evenly">
+                                <p className="text-sm font-bold">Bases de Datos 1</p>
+                                <MoreHorizRoundedIcon className="text-gray-500 cursor-pointer" />
+                            </div>
+                        <p className="text-xs">64,5 mil publicaciones</p>
                     </div>
                 </div>)}
                 <span className="text-left texto-especial">Mostrar más</span>
