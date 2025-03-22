@@ -14,7 +14,7 @@ import BookmarkRoundedIcon from "@mui/icons-material/BookmarkRounded";
 
 import ModalResponder from "../components/perfil/ModalResponder";
 
-const Tweet = () => {
+const Post = () => {
   const navigate = useNavigate();
 
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -183,4 +183,4 @@ const Tweet = () => {
   );
 };
 
-export default Tweet;
+export default Post;

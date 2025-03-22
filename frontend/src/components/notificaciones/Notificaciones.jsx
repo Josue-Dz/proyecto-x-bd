@@ -1,8 +1,17 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { Avatar, Button, Tab, Box } from '@mui/material'
+import { TabContext, TabList, TabPanel } from '@mui/lab';
 
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 
 const Notificaciones = () => {
+
+        const [tabValue, setTabValue] = useState("1");
+    
+        const handleTabChange = (event, newValue) => {
+            setTabValue(newValue);
+        };
+
   return (
     <div className='border-gray-200 border-[1px] h-full'>
 
@@ -12,20 +21,65 @@ const Notificaciones = () => {
             <SettingsOutlinedIcon className='ml-3 cursor-pointer'/>
         </div>
 
-        <div className="flex justify-evenly border-gray-200 border-b-[1px] items-center relative">
-            <div className="flex flex-col w-full hover:bg-gray-100 cursor-pointer px-3">
-                <h4 className="py-2 text-sm font-bold">Todas</h4>
-                <span className="bottom-0 left-0 w-full h-1 bg-blue-500 rounded-full"></span>
-            </div>
+            <div>
+                <Box value={0} sx={{ width: '100%'}}>
+                    <TabContext value={tabValue}>
+                        <Box sx={{ borderBottom: 1, borderColor: 'divider', display: 'flex', justifyContent: 'center', width: '100%'  }}>
+                            <TabList onChange={handleTabChange} aria-label="lab API tabs example">
+                                <Tab 
+                                    label="Todas" 
+                                    value="1" 
+                                    sx={{ textTransform: 'none',
+                                        fontWeight: tabValue === "1" ? 'bold' : 'normal',
+                                        color: tabValue === "1" ? 'black' : 'gray',
+                                        outline: 'none',  
+                                        '&:focus': {
+                                        outline: 'none',  
+                                        },
+                                        '&:hover': {
+                                        backgroundColor: 'gray.200', 
+                                        }
+                                    }} 
+                                />
+                                <Tab 
+                                    label="Verificado" 
+                                    value="2" 
+                                    sx={{ textTransform: 'none', 
+                                        fontWeight: tabValue === "2" ? 'bold' : 'normal',
+                                        color: tabValue === "2" ? 'black' : 'gray',
+                                        outline: 'none',  
+                                        '&:focus': {
+                                        outline: 'none',  
+                                        },
+                                        '&:hover': {
+                                        backgroundColor: 'gray.200', 
+                                        }
+                                    }} 
+                                />
+                                <Tab 
+                                    label="Menciones" 
+                                    value="3" 
+                                    sx={{ textTransform: 'none', 
+                                        fontWeight: tabValue === "3" ? 'bold' : 'normal',
+                                        color: tabValue === "3" ? 'black' : 'gray',
+                                        outline: 'none',  
+                                        '&:focus': {
+                                        outline: 'none',  
+                                        },
+                                        '&:hover': {
+                                        backgroundColor: 'gray.200', 
+                                        }
+                                    }} 
+                                />
+                            </TabList>
+                        </Box>
 
-            <div className="flex flex-col w-full hover:bg-gray-100 cursor-pointer px-3">
-                <h4 className="py-3 text-sm font-bold opacity-80">Verificado</h4>
+                        <TabPanel value="1">Todas</TabPanel>
+                        <TabPanel value="2">Verificado</TabPanel>
+                        <TabPanel value="3">Menciones</TabPanel>
+                    </TabContext>
+                </Box>
             </div>
-
-            <div className="flex flex-col w-full hover:bg-gray-100 cursor-pointer px-3">
-                <h4 className="py-3 text-sm font-bold opacity-80">Menciones</h4>
-            </div>
-        </div>
     </div>
 
 </div>

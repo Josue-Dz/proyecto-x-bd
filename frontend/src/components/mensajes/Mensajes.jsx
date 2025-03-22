@@ -5,6 +5,8 @@ import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 
 const Mensajes = () => {
+
+  
   return (
     <div className='border-gray-200 border-[1px] h-full'>
 

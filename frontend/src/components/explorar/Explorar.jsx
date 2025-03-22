@@ -1,9 +1,18 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { Avatar, Button, Tab, Box } from '@mui/material'
+import { TabContext, TabList, TabPanel } from '@mui/lab';
 
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 
 const Explorar = () => {
+
+    const [tabValue, setTabValue] = useState("1");
+
+    const handleTabChange = (event, newValue) => {
+        setTabValue(newValue);
+    };
+
   return (
     <div className='border-gray-200 border-[1px] h-full'>
 
@@ -17,27 +26,48 @@ const Explorar = () => {
                 <SettingsOutlinedIcon className='ml-3 cursor-pointer'/>
             </div>
 
-            <div className="flex justify-evenly border-gray-200 border-b-[1px] items-center relative">
-                <div className="flex flex-col w-full hover:bg-gray-100 cursor-pointer px-3">
-                    <h6 className="py-2 text-base font-bold opacity-90">Para ti</h6>
-                    <span className="bottom-0 left-0 w-full h-1 bg-blue-500 rounded-full"></span>
-                </div>
+            <div>
+                <Box value={0} sx={{ width: '100%'}}>
+                    <TabContext value={tabValue}>
+                        <Box sx={{ borderBottom: 1, borderColor: 'divider', display: 'flex', justifyContent: 'center', width: '100%'  }}>
+                            <TabList onChange={handleTabChange} aria-label="lab API tabs example">
+                                <Tab 
+                                    label="Para ti" 
+                                    value="1" 
+                                    sx={{ textTransform: 'none',
+                                        fontWeight: tabValue === "1" ? 'bold' : 'normal',
+                                        color: tabValue === "1" ? 'black' : 'gray',
+                                        outline: 'none',  
+                                        '&:focus': {
+                                        outline: 'none',  
+                                        },
+                                        '&:hover': {
+                                        backgroundColor: 'gray.200', 
+                                        }
+                                    }} 
+                                />
+                                <Tab 
+                                    label="Tendencias" 
+                                    value="2" 
+                                    sx={{ textTransform: 'none', 
+                                        fontWeight: tabValue === "2" ? 'bold' : 'normal',
+                                        color: tabValue === "2" ? 'black' : 'gray',
+                                        outline: 'none',  
+                                        '&:focus': {
+                                        outline: 'none',  
+                                        },
+                                        '&:hover': {
+                                        backgroundColor: 'gray.200', 
+                                        }
+                                    }} 
+                                />
+                            </TabList>
+                        </Box>
 
-                <div className="flex flex-col w-full hover:bg-gray-100 cursor-pointer px-3">
-                    <h6 className="py-3 text-base font-bold opacity-90">Tendencias</h6>
-                </div>
-
-                <div className="flex flex-col w-full hover:bg-gray-100 cursor-pointer px-3">
-                    <h6 className="py-3 text-base font-bold opacity-90">Noticias</h6>
-                </div>
-
-                <div className="flex flex-col w-full hover:bg-gray-100 cursor-pointer px-3">
-                    <h6 className="py-3 text-base font-bold opacity-90">Deportes</h6>
-                </div>
-
-                <div className="flex flex-col w-full hover:bg-gray-100 cursor-pointer px-3">
-                    <h6 className="py-3 text-base font-bold opacity-90">Entretenimiento</h6>
-                </div>
+                        <TabPanel value="1">Para ti</TabPanel>
+                        <TabPanel value="2">Tendencias</TabPanel>
+                    </TabContext>
+                </Box>
             </div>
         </div>
 

@@ -3,7 +3,7 @@ import { Avatar, Button, Tab, Box } from '@mui/material'
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
-import Tweet from './Tweet';
+import Post from './Post';
 
 import BrokenImageOutlinedIcon from '@mui/icons-material/BrokenImageOutlined';
 import GifBoxOutlinedIcon from '@mui/icons-material/GifBoxOutlined';
@@ -64,7 +64,6 @@ const Feed = () => {
                                 label="Para ti" 
                                 value="1" 
                                 sx={{ textTransform: 'none',
-                                    px: '20%', 
                                     fontWeight: tabValue === "1" ? 'bold' : 'normal',
                                     color: tabValue === "1" ? 'black' : 'gray',
                                     outline: 'none',  
@@ -80,7 +79,6 @@ const Feed = () => {
                                 label="Siguiendo" 
                                 value="2" 
                                 sx={{ textTransform: 'none', 
-                                    px: '20%',
                                     fontWeight: tabValue === "2" ? 'bold' : 'normal',
                                     color: tabValue === "2" ? 'black' : 'gray',
                                     outline: 'none',  
@@ -164,7 +162,7 @@ const Feed = () => {
                         </section>
 
                         <section>
-                            {[1,1,1,1,1].map((item)=> <Tweet/>)}
+                            {[1,1,1,1,1].map((item)=> <Post/>)}
                         </section>
                     </TabPanel>
 

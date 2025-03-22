@@ -54,7 +54,13 @@ const Tendencias = () => {
                     </p>
                 </div>
                 <div>
-                    <Button className="normal-case" onClick={handleOpenModalSuscripcion} variant='contained' sx={{ fontWeight: "bold", bgcolor: "#1d9bf0", textTransform: "none", padding: "5px", paddingX: "20px", borderRadius: "25px", position: "left" }}>
+                    <Button className="normal-case" onClick={handleOpenModalSuscripcion} variant='contained' sx={{ fontWeight: "bold", 
+                                                                                                                    bgcolor: "#1d9bf0", 
+                                                                                                                    textTransform: "none", 
+                                                                                                                    padding: "5px", 
+                                                                                                                    paddingX: "20px", 
+                                                                                                                    borderRadius: "25px", 
+                                                                                                                    boxShadow: "none", }}>
                         Suscribirse
                     </Button>
                 </div>
@@ -68,7 +74,7 @@ const Tendencias = () => {
                         <p className="text-xs">Ejemplo · Tendencia</p>
                             <div className="flex items-center justify-evenly">
                                 <p className="text-sm font-bold">Bases de Datos 1</p>
-                                <MoreHorizRoundedIcon className="text-gray-500 cursor-pointer" />
+                                <MoreHorizRoundedIcon className="text-gray-500 cursor-pointer ml-40" />
                             </div>
                         <p className="text-xs">64,5 mil publicaciones</p>
                     </div>

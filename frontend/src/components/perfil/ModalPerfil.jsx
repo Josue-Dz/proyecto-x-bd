@@ -76,8 +76,12 @@ export default function ModalPerfil({ open, handleClose }) {
                             </div>
 
                             <Button sx={{
-                                borderRadius: "999px",
-                                py: "6px",
+                                fontWeight: "bold",  
+                                textTransform: "none", 
+                                padding: "5px", 
+                                paddingX: "20px", 
+                                borderRadius: "25px",
+                                boxShadow: "none", 
                                 bgcolor: isDarkMode ? "#ffffff" : "#000000",
                                 color: isDarkMode ? "#000000" : "#ffffff",
                             }}

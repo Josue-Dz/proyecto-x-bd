@@ -71,7 +71,7 @@ const menuNav = [
   },
 ];
 
-const MenuTwitter = () => {
+const MenuX = () => {
   const navigate = useNavigate();
   const { isDarkMode, toggleTheme } = useTheme();
 
@@ -180,4 +180,4 @@ const MenuTwitter = () => {
   );
 };
 
-export default MenuTwitter;
+export default MenuX;

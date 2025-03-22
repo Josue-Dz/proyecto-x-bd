@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Divider } from '@mui/material';
 
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace'
-import Tweet from '../../pages/Tweet';
+import Post from '../../pages/Post';
 import { useTheme } from '../../context/ThemeContext';
 
 export const DetallesPost = () => {
@@ -28,7 +28,7 @@ export const DetallesPost = () => {
             </section>
 
             <section>
-                {[1,1,1].map((item) => <Tweet />)}
+                {[1,1,1].map((item) => <Post />)}
             </section>
 
         </React.Fragment>
