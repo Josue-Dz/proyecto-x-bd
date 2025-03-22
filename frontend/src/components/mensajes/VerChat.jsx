@@ -1,12 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import { Button } from '@mui/material'; 
 
+import ModalMensajeNuevo from './ModalMensajeNuevo';
+
 const VerChat = () => {
 
-  const [OpenModalNuevoMensaje, setOpenModalNuevoMensaje] = React.useState(false);
-      const handleOpenModalNuevoMensaje = () => setOpenModalNuevoMensaje(true);
-      const handleCloseModalNuevoMensaje = () => setOpenModalNuevoMensaje(false);
+  const [openMensajeNuevoModal, setOpenMensajeNuevoModal] = useState(false);
+      const handleOpenModalMensajeNuevo = () => setOpenMensajeNuevoModal(true);
+      const handleClose = () => setOpenMensajeNuevoModal(false);
 
   return (
     <div className='flex flex-col justify-center items-start h-screen'>
@@ -20,7 +22,7 @@ const VerChat = () => {
         </div>
 
         <div className='w-full items-start justify-items-start'>
-            <Button className="normal-case" onClick={handleOpenModalNuevoMensaje} variant='contained' sx={{ fontWeight: "bold", 
+            <Button className="normal-case" onClick={handleOpenModalMensajeNuevo} variant='contained' sx={{ fontWeight: "bold", 
                                                                                                                     bgcolor: "#1d9bf0", 
                                                                                                                     textTransform: "none", 
                                                                                                                     padding: "10px", 
@@ -30,6 +32,11 @@ const VerChat = () => {
               Nuevo mensaje
             </Button>
         </div>
+
+        <section>
+            <ModalMensajeNuevo open={openMensajeNuevoModal} handleClose={handleClose} />
+        </section>
+        
     </div>
   )
 }

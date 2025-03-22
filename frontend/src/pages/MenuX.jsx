@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Avatar, Button, Menu, MenuItem} from "@mui/material";
 import { useTheme } from '../context/ThemeContext';
 import Perfil from "../components/perfil/Perfil";
+import ModalSuscripcion from "../components/modalsuscripcion/ModalSuscripcion";
 
 import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
@@ -19,59 +20,19 @@ import PendingOutlinedIcon from '@mui/icons-material/PendingOutlined';
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 
 const menuNav = [
-  {
-    title: "Inicio",
-    icon: <HomeRoundedIcon />,
-    path: "/inicio",
-  },
-  {
-    title: "Explorar",
-    icon: <SearchRoundedIcon />,
-    path: "/explorar",
-  },
-  {
-    title: "Notificaciones",
-    icon: <NotificationsNoneRoundedIcon />,
-    path: "/notificaciones",
-  },
-  {
-    title: "Mensajes",
-    icon: <MailOutlineRoundedIcon />,
-    path: "/mensajes",
-  },
-  {
-    title: "Grok",
-    icon: <DataUsageRoundedIcon />,
-    path: "/grok",
-  },
-  {
-    title: "Comunidades",
-    icon: <PeopleOutlineRoundedIcon />,
-    path: "/comunidades",
-  },
-  {
-    title: "Premium",
-    icon: <VerifiedRoundedIcon />,
-    path: "/premium",
-  },
-  {
-    title: "Organizaciones Verificadas",
-    icon: <FlashOnRoundedIcon />,
-    path: "/orgs",
-  },
-  {
-    title: "Perfil",
-    icon: <PermIdentityRoundedIcon />,
-    path: "/perfil",
-  },
-  {
-    title: "Mas opciones",
-    icon: <PendingOutlinedIcon/>,
-    path: "/mas",
-  },
+  { title: "Inicio", icon: <HomeRoundedIcon />, path: "/inicio" },
+  { title: "Explorar", icon: <SearchRoundedIcon />, path: "/explorar" },
+  { title: "Notificaciones", icon: <NotificationsNoneRoundedIcon />, path: "/notificaciones" },
+  { title: "Mensajes", icon: <MailOutlineRoundedIcon />, path: "/mensajes" },
+  { title: "Grok", icon: <DataUsageRoundedIcon />, path: "/grok" },
+  { title: "Comunidades", icon: <PeopleOutlineRoundedIcon />, path: "/comunidades" },
+  { title: "Premium", icon: <VerifiedRoundedIcon />, path: "/premium" }, // Aquí está el icono Premium
+  { title: "Organizaciones Verificadas", icon: <FlashOnRoundedIcon />, path: "/orgs" },
+  { title: "Perfil", icon: <PermIdentityRoundedIcon />, path: "/perfil" },
+  { title: "Mas opciones", icon: <PendingOutlinedIcon />, path: "/mas" },
 ];
 
-const MenuX = () => {
+const MenuX = ({ setOpenModal }) => {
   const navigate = useNavigate();
   const { isDarkMode, toggleTheme } = useTheme();
 
@@ -111,11 +72,15 @@ const MenuX = () => {
               <div
                 key={item.path}
                 className="cursor-pointer flex space-x-3 items-center hover:bg-gray-200 rounded-4xl px-2 py-2 transition"
-                onClick={() =>
-                  item.title === "Perfil"
-                    ? navigate(`/perfil/${5}`)
-                    : navigate(item.path)
-                }
+                onClick={() => {
+                  if (item.title === "Premium" || item.title === "Grok" || item.title === "Organizaciones Verificadas") {
+                    setOpenModal(true); 
+                  } else if (item.title === "Perfil") {
+                    navigate(`/perfil/${5}`);
+                  } else {
+                    navigate(item.path);
+                  }
+                }}
               >
                 {item.icon}
                 <p className="text-lg font-normal text-left truncate w-[150px]">{item.title}</p>

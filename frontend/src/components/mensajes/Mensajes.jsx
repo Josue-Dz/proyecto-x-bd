@@ -1,10 +1,16 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 
+import ModalMensajeNuevo from './ModalMensajeNuevo';
+
 const Mensajes = () => {
+
+  const [openMensajeNuevoModal, setOpenMensajeNuevoModal] = useState(false);
+      const handleOpenModalMensajeNuevo = () => setOpenMensajeNuevoModal(true);
+      const handleClose = () => setOpenMensajeNuevoModal(false);
 
   
   return (
@@ -13,7 +19,7 @@ const Mensajes = () => {
         <div className='relative flex items-center mx-3.5'>
             <h2 className="py-2 text-lg text-start font-bold w-2xl">Mensajes</h2>
             <SettingsOutlinedIcon className='ml-3 cursor-pointer'/>
-            <AddBoxOutlinedIcon className='ml-3 cursor-pointer'/>
+            <AddBoxOutlinedIcon onClick={handleOpenModalMensajeNuevo} className='ml-3 cursor-pointer'/>
         </div>
 
         <div className='relative flex items-center mx-3.5'>
@@ -24,6 +30,11 @@ const Mensajes = () => {
                 <SearchRoundedIcon className='text-gray-500' />
             </div>
         </div>
+
+        <section>
+          <ModalMensajeNuevo open={openMensajeNuevoModal} handleClose={handleClose} />
+        </section>
+        
 
 </div>
   )

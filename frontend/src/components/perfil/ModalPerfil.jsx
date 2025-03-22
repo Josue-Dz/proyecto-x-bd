@@ -95,7 +95,7 @@ export default function ModalPerfil({ open, handleClose }) {
                                 <div className="w-full">
                                     <div className="relative">
                                         <img className="w-full h-[12rem] object-cover object-center"
-                                            src="https://cdn.pixabay.com/photo/2023/12/30/21/14/fields-8478994_1280.jpg"
+                                            src="https://cdn.pixabay.com/photo/2021/09/06/20/12/cat-6602447_1280.jpg"
                                             alt="Imagen de portada del perfil"
                                         />
                                         <input
@@ -103,7 +103,7 @@ export default function ModalPerfil({ open, handleClose }) {
                                             className="w-full h-full absolute top-0 left-0 opacity-0 cursor-pointer"
                                             name="imagenFondo"
                                             onChange={handleImageChange}
-                                        />
+                                        /> 
                                     </div>
                                 </div>
 
@@ -111,7 +111,7 @@ export default function ModalPerfil({ open, handleClose }) {
                                     <div className="relative">
                                         <Avatar
                                             sx={{ width: "10rem", height: "10rem", border: "4px solid white" }}
-                                            src="https://cdn.pixabay.com/photo/2025/01/08/19/02/border-collie-9319990_1280.jpg"
+                                            src="https://i.pinimg.com/736x/95/78/83/9578835cc8ee0e2dc3e7a7cc265ea994.jpg"
                                             alt="Imagen del perfil"
                                         />
                                         <input
