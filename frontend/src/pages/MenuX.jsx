@@ -32,9 +32,9 @@ const menuNav = [
   { title: "Mas opciones", icon: <PendingOutlinedIcon />, path: "/mas" },
 ];
 
-const MenuX = ({ setOpenModal }) => {
+const MenuX = ({ setOpenModal, setIsAuthenticated }) => {
   const navigate = useNavigate();
-  const { isDarkMode, toggleTheme } = useTheme();
+  const { isDarkMode } = useTheme();
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -48,8 +48,11 @@ const MenuX = ({ setOpenModal }) => {
   };
 
   const handleLogout = () => {
+    setIsAuthenticated(false); 
     handleClose();
+    navigate("/signin");
   };
+
 
   return (
     <div className="h-screen sticky top-0">

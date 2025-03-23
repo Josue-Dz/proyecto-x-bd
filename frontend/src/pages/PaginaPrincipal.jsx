@@ -11,7 +11,6 @@ import DetallesPost from "../components/detallespost/DetallesPost";
 import Explorar from "../components/explorar/explorar";
 import Notificaciones from "../components/notificaciones/Notificaciones";
 import Mensajes from "../components/mensajes/Mensajes";
-import { TarjetaSeguimientoX } from "../components/seguimiento/TarjetaSeguimientoX";
 import VerChat from "../components/mensajes/VerChat";
 import ModalSuscripcion from "../components/modalsuscripcion/ModalSuscripcion";
 import Comunidades from "../components/comunidades/Comunidades";
@@ -36,14 +35,14 @@ const users = [
 
 
 
-const PaginaPrincipal = () => {
+const PaginaPrincipal = ({setIsAuthenticated}) => {
 
   const [openModal, setOpenModal] = useState(false);
 
   return (
     <Grid container className="justify-between w-full">
       <Grid item xs={2} md={2} className="hidden md:block w-full relative">
-        <MenuX setOpenModal={setOpenModal} />
+        <MenuX setOpenModal={setOpenModal} setIsAuthenticated={setIsAuthenticated}/>
       </Grid>
       <Grid item xs={10} md={6.5} className="px-4 w-full relative">
 
