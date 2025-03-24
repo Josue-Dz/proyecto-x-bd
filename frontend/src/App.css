@@ -130,13 +130,22 @@
 .x-followCard-followButton.is-following-lightmode:hover {
   color: rgb(244, 33, 46);
   transition: .3s ease all;
+  
 }
 
 .x-followCard-followButton.is-following-darkmode:hover .x-followCard-unFollow{
   display: block;
 }
 
+.x-followCard-followButton.is-following-lightmode:hover .x-followCard-unFollow{
+  display: block;
+}
+
 .x-followCard-followButton.is-following-darkmode:hover .x-followCard-text {
+  display: none;
+}
+
+.x-followCard-followButton.is-following-lightmode:hover .x-followCard-text {
   display: none;
 }
 

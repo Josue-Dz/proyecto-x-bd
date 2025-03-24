@@ -2,16 +2,13 @@ import * as React from "react";
 import { useNavigate } from "react-router-dom";
 import { Avatar, Button, Menu, MenuItem} from "@mui/material";
 import { useTheme } from '../context/ThemeContext';
-import Perfil from "../components/perfil/Perfil";
-import ModalSuscripcion from "../components/modalsuscripcion/ModalSuscripcion";
+
 
 import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import NotificationsNoneRoundedIcon from "@mui/icons-material/NotificationsNoneRounded";
 import MailOutlineRoundedIcon from "@mui/icons-material/MailOutlineRounded";
 import DataUsageRoundedIcon from "@mui/icons-material/DataUsageRounded";
-import BookmarkBorderRoundedIcon from "@mui/icons-material/BookmarkBorderRounded";
-import WorkOutlineRoundedIcon from "@mui/icons-material/WorkOutlineRounded";
 import PeopleOutlineRoundedIcon from "@mui/icons-material/PeopleOutlineRounded";
 import VerifiedRoundedIcon from "@mui/icons-material/VerifiedRounded";
 import FlashOnRoundedIcon from "@mui/icons-material/FlashOnRounded";

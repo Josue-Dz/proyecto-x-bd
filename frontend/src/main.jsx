@@ -11,11 +11,9 @@ root.render(
   <StrictMode>
     <BrowserRouter>
 
-    <GoogleOAuthProvider>
-
-     <App />
-
-</GoogleOAuthProvider>
+      <GoogleOAuthProvider>
+        <App />
+      </GoogleOAuthProvider>
 
 
     </BrowserRouter>

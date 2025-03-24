@@ -12,6 +12,7 @@ import BallotOutlinedIcon from '@mui/icons-material/BallotOutlined';
 import EmojiEmotionsOutlinedIcon from '@mui/icons-material/EmojiEmotionsOutlined';
 import CalendarTodayOutlinedIcon from '@mui/icons-material/CalendarTodayOutlined';
 import FmdGoodOutlinedIcon from '@mui/icons-material/FmdGoodOutlined';
+import { useTheme } from '../context/ThemeContext'
 
 const validationSchema = Yup.object().shape({
     content:Yup.string().required("El texto para el post es obligatorio"),
@@ -20,10 +21,9 @@ const validationSchema = Yup.object().shape({
 const Feed = () => {
 
     const [uploadingImage, setUploadingImage] = useState(false);
-
     const [selectImage, setSelectedImage] = useState("");
-
     const [tabValue, setTabValue] = useState("1");
+    const { isDarkMode } = useTheme();
 
     const handleSubmit = (values) =>{
         console.log("values ", values)
@@ -50,7 +50,7 @@ const Feed = () => {
     };
     
   return (
-        <div className='border-gray-200 border-[1px] h-full'>
+        <div className={`border-[0.5px] h-full ${isDarkMode ? "border-gray-700" : "border-gray-200"}`}>
 
         <section className="py-1">
 
@@ -58,7 +58,7 @@ const Feed = () => {
                 width: '100%'
             }}>
                 <TabContext value={tabValue}>
-                    <Box sx={{ borderBottom: 1, borderColor: 'divider', display: 'flex', justifyContent: 'center', width: '100%'  }}>
+                    <Box sx={{ borderBottom: 1, borderColor: isDarkMode ? 'rgba(255, 255, 255, 0.2)' : 'rgba(0, 0, 0, 0.15)' , display: 'flex', justifyContent: 'center', width: '100%'  }}>
                         <TabList onChange={handleTabChange} aria-label="lab API tabs example">
                             <Tab 
                                 label="Para ti" 
@@ -94,7 +94,7 @@ const Feed = () => {
                     </Box>
 
                     <TabPanel value="1">
-                    <section className="p-2 border-gray-200 border-b-[1px]">
+                    <section className="p-2 border-gray-700 border-b-[0.5px]">
                         <div className="flex items-start space-x-3">
                             <Avatar
                             alt="username"

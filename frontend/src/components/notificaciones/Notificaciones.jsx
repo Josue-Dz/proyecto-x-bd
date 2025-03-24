@@ -3,9 +3,10 @@ import { Avatar, Button, Tab, Box } from '@mui/material'
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
+import { useTheme } from '../../context/ThemeContext'
 
 const Notificaciones = () => {
-
+        const { isDarkMode } = useTheme();
         const [tabValue, setTabValue] = useState("1");
     
         const handleTabChange = (event, newValue) => {
@@ -13,7 +14,7 @@ const Notificaciones = () => {
         };
 
   return (
-    <div className='border-gray-200 border-[1px] h-full'>
+    <div className={`border-[0.5px] h-full ${isDarkMode ? "border-gray-700" : "border-gray-200"}`}>
 
     <div className='py-1 sticky top'>
         <div className='relative flex items-center mx-3.5'>

@@ -1,30 +1,30 @@
 import React from "react";
 import Button from "@mui/material/Button";
-import { GoogleLogin } from "@react-oauth/google"; 
+import { GoogleLogin } from "@react-oauth/google";
 import AuthModal from "./AuthModal";
 import { useState } from "react";
-//import { useNavigate } from "react-router-dom";
 
 
-const Autentificacion = ({setIsAuthenticated}) => {
-    
-    const [openAuthModal, setOpenAuthModal] = useState(false);
-    const handleOpenAuthModal =()=>setOpenAuthModal(true);
-    const handleCloseAuthModal =()=>setOpenAuthModal(false);
+const Autentificacion = ({ setIsAuthenticated }) => {
+
+  const [openAuthModal, setOpenAuthModal] = useState(false);
+  const handleOpenAuthModal = () => setOpenAuthModal(true);
+  const handleCloseAuthModal = () => setOpenAuthModal(false);
 
 
   return (
+    
     <div className="overflow-y-hidden flex lg:flex-row flex-col min-h-screen">
-      {/* Sección de la imagen */}
+
       <div className="lg:w-7/12 h-screen relative hidden lg:block">
         <img
           className="w-full h-full object-cover"
-          src="https://abs.twimg.com/sticky/illustrations/lohp_en_1302x955.png"
+          src="/assets/login.png"
           alt="Twitter Illustration"
         />
         <div className="absolute top-[26%] left-[19%]">
           <img
-            src="https://upload.wikimedia.org/wikipedia/commons/b/b7/X_logo.jpg"
+            src="/assets/X_logo.jpg"
             alt="X Logo"
             width="300"
             height="300"
@@ -32,56 +32,63 @@ const Autentificacion = ({setIsAuthenticated}) => {
         </div>
       </div>
 
-      {/* Sección de autenticación */}
-      <div className="px-10" lg={5} xs={12}>
-        <h1 className="mt-10 font-bold text-7xl">Esta Pasando Ahora</h1>
-        <p className="font-bold text-3xl py-16 text-left">Unite a Twitter Hoy.</p>
 
-        {/* Formulario de autenticación */}
+      <div className="px-10 items-start" lg={5} xs={12}>
+        <h2 className="text-left mt-10 font-bold text-7xl">Lo que está pasando ahora</h2>
+        <p className="font-bold text-3xl py-16 text-left">Únete Hoy</p>
+
+
         <div className="w-[60%]">
-          <div className="w-full">
-            {/* Botón de Google */}
-            <GoogleLogin width={330} /> 
+          <div className="w-full justify-items-start">
 
-            <p className="py-5 text-center">O</p>
+              <GoogleLogin width={300} />
 
-            {/* Botón de Crear Cuenta */}
+
+            <div class="mt-5 flex w-[300px] my-2">
+              <div class="flex-1 h-px bg-gray-200"></div>
+              <span class="px-4 text-black">o</span>
+              <div class="flex-1 h-px bg-gray-200"></div>
+            </div>
+
             <Button
-             onClick ={handleOpenAuthModal}
               fullWidth
+              onClick={handleOpenAuthModal}
               variant="contained"
               size="large"
-              sx={{ 
+              sx={{
                 borderRadius: "29px",
-                 py: "7px",
-                 }}
+                py: "7px",
+                width: 300,
+              }}
             >
               Crea una Cuenta
             </Button>
 
             <p className="text-sm mt-2">
-              Para iniciar sesion, tienes que estar de acuerdo con los terminos y condiciones y politicas de seguridad, ademas del uso de Cookies.
+              Para iniciar sesion, tienes que estar de acuerdo con los terminos y condiciones y
+              politicas de seguridad, ademas del uso de Cookies.
             </p>
           </div>
 
           {/* Sección de Login */}
-          <div className="mt-10">
-            <h1 className="font-bold text-xs mb-3">¿Ya tienes Una Cuenta?</h1>
+          <div className="mt-10 justify-items-start">
+            <p className="font-bold text-lg mb-3">¿Ya tienes Una Cuenta?</p>
 
             <Button
-            onClick ={handleOpenAuthModal}
+              onClick={handleOpenAuthModal}
               fullWidth
               variant="outlined"
               size="large"
-              sx={{ 
-                borderRadius: "29px", 
-                py: "7px" ,
-            }}>Ingresar </Button>
+              sx={{
+                borderRadius: "29px",
+                py: "7px",
+                width: 300
+              }}>Ingresar </Button>
           </div>
         </div>
       </div>
-      <AuthModal open ={openAuthModal} handleClose= {handleCloseAuthModal} 
-      setIsAuthenticated={setIsAuthenticated}></AuthModal>
+      <AuthModal open={openAuthModal} handleClose={handleCloseAuthModal}
+        setIsAuthenticated={setIsAuthenticated}></AuthModal>
     </div>
   );
 };

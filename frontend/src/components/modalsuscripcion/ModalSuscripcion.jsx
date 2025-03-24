@@ -1,23 +1,31 @@
 import * as React from 'react';
 import { useState } from 'react';
 import { Box, Button, Typography, Modal, Radio, RadioGroup, FormControlLabel } from '@mui/material';
+import { useTheme } from '../../context/ThemeContext';
 
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 600,
-  bgcolor: 'background.paper',
-  border: 'none',
-  outline: "none",
-  boxShadow: 24,
-  p: 4,
-  borderRadius: 4
-};
+
 
 export default function ModalSuscripcion({ open, handleClose }) {
   const [planSeleccionado, setPlanSeleccionado] = useState("premium");
+  const { isDarkMode } = useTheme();
+
+  const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 600,
+    bgcolor: isDarkMode ? 'rgba(0, 0, 0, 0.9)' : 'background.paper',
+    border: 'none',
+    outline: "none",
+    boxShadow: 24,
+    p: 4,
+    borderRadius: 4
+  };
+
+  const textColor = {
+    color: isDarkMode ? 'gray' : 'textSecondary'
+  }
 
   return (
     <Modal open={open} onClose={handleClose} aria-labelledby="modal-title">
@@ -33,7 +41,7 @@ export default function ModalSuscripcion({ open, handleClose }) {
           {/* Plan Básico */}
           <Box p={2} borderRadius={2} border="1px solid #ccc" mb={2}>
             <FormControlLabel value="basico" control={<Radio />} label="Básico - 2.67 US$/mes" />
-            <Typography variant="body2" color="textSecondary">
+            <Typography variant="body2" color={textColor}>
               32,00 US$ facturados anualmente - Ahorra 11%
             </Typography>
           </Box>
@@ -41,7 +49,7 @@ export default function ModalSuscripcion({ open, handleClose }) {
           {/* Plan Premium */}
           <Box p={2} borderRadius={2} border="2px solid blue" mb={2}>
             <FormControlLabel value="premium" control={<Radio />} label="Premium - 7.00 US$/mes" />
-            <Typography variant="body2" color="textSecondary">
+            <Typography variant="body2" color={textColor}>
               84,00 US$ facturados anualmente - Ahorra 12%
             </Typography>
           </Box>
@@ -49,7 +57,7 @@ export default function ModalSuscripcion({ open, handleClose }) {
           {/* Plan Premium+ */}
           <Box p={2} borderRadius={2} border="1px solid #ccc">
             <FormControlLabel value="premiumPlus" control={<Radio />} label="Premium+ - 32.92 US$/mes" />
-            <Typography variant="body2" color="textSecondary">
+            <Typography variant="body2" color={textColor}>
               395,00 US$ facturados anualmente - Ahorra 17%
             </Typography>
           </Box>
@@ -66,7 +74,7 @@ export default function ModalSuscripcion({ open, handleClose }) {
         </Button>
 
         {/* Nota */}
-        <Typography variant="caption" color="textSecondary" display="block" mt={2}>
+        <Typography variant="caption" color={textColor} display="block" mt={2}>
           Si te suscribes, aceptas los <a href="#">Términos de servicio</a>. Puedes cancelar en cualquier momento.
         </Typography>
       </Box>

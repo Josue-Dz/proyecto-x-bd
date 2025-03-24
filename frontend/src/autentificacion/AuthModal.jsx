@@ -20,7 +20,7 @@ const style = {
 };
 
 
-export default function AuthModal({ open, handleClose, setIsAuthenticated}) {
+export default function AuthModal({ open, handleClose, setIsAuthenticated }) {
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -38,15 +38,20 @@ export default function AuthModal({ open, handleClose, setIsAuthenticated}) {
     >
       <Box sx={style}>
 
-      <h1 className="text-center font-bold text-3xl pb-20">
-          Crea una Cuenta
-        </h1>
+        {/* <h2 className="text-center font-bold text-3xl pb-20">
+          
+        </h2> */}
+        <div className='justify-items-center'>
+          <img src="/assets/X_logo.png" className='w-6 h-6' />
+          <p className='font-bold text-3xl mt-8 pb-12'>Iniciar Sesión en X</p>
+        </div>
 
-    {location.pathname === "/signup"?<FormularioInscripcion/>:<FormularioEntrada setIsAuthenticated={setIsAuthenticated}/>}
 
-        <h1 className="text-center py-5 font-semibold text-lg text-gray-500">
-          {location.pathname === "/signup" ? "¿Ya tienes una Cuenta?" : "Si no tienes una cuenta"}
-        </h1>
+        {location.pathname === "/signup" ? <FormularioInscripcion /> : <FormularioEntrada setIsAuthenticated={setIsAuthenticated} />}
+
+        <p className="text-center py-5 font-semibold text-gray-500">
+          {location.pathname === "/signup" ? "¿Ya tienes una Cuenta?" : "¿No tienes una Cuenta? Registrate"}
+        </p>
 
         <Button
 

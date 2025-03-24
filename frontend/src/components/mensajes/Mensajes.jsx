@@ -5,17 +5,20 @@ import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 
 import ModalMensajeNuevo from './ModalMensajeNuevo';
+import { useTheme } from '../../context/ThemeContext'
 
 const Mensajes = () => {
 
   const [openMensajeNuevoModal, setOpenMensajeNuevoModal] = useState(false);
-      const handleOpenModalMensajeNuevo = () => setOpenMensajeNuevoModal(true);
-      const handleClose = () => setOpenMensajeNuevoModal(false);
+  const handleOpenModalMensajeNuevo = () => setOpenMensajeNuevoModal(true);
+  const handleClose = () => setOpenMensajeNuevoModal(false);
+  const { isDarkMode } = useTheme();
+ 
 
   
   return (
-    <div className='border-gray-200 border-[1px] h-full'>
-
+    <div className={`border-[0.5px] h-full ${isDarkMode ? "border-gray-700" : "border-gray-200"}`}>
+      
         <div className='relative flex items-center mx-3.5'>
             <h2 className="py-2 text-lg text-start font-bold w-2xl">Mensajes</h2>
             <SettingsOutlinedIcon className='ml-3 cursor-pointer'/>

@@ -13,24 +13,24 @@ export const DetallesPost = () => {
 
     return (
         <React.Fragment>
+            <div className='border-gray-700 border-[0.5px] h-full p-2'>
+                <section className={`z-50 flex items-center sticky top-0  
+                    ${isDarkMode ? "transparencia-darkmode" : "transparencia-lightmode"}`}>
 
-            <section className={`z-50 flex items-center sticky top-0 
-                ${ isDarkMode ? "transparencia-darkmode" : "transparencia-lightmode" }`}>
+                    <KeyboardBackspaceIcon className='cursor-pointer' onClick={handleBack} />
+                    <h2 className='ml-5 py-5 text-xl font-bold opacity-90'>Post</h2>
 
-                <KeyboardBackspaceIcon className='cursor-pointer' onClick={handleBack} />
-                <h2 className='ml-5 py-5 text-xl font-bold opacity-90'>Post</h2>
+                </section>
 
-            </section>
+                <section>
+                    <Post />
+                    <Divider sx={{ margin: "2rem 0rem" }} />
+                </section>
 
-            <section>
-                <Post />
-                <Divider sx={{margin:"2rem 0rem"}}/>
-            </section>
-
-            <section>
-                {[1,1,1].map((item) => <Post />)}
-            </section>
-
+                <section>
+                    {[1, 1, 1].map((item) => <Post />)}
+                </section>
+            </div>
         </React.Fragment>
     )
 }

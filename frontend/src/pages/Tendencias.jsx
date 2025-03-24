@@ -40,17 +40,21 @@ const Tendencias = () => {
 
     return (
         <div className='py-1 sticky top-0'>
-            {ruta ? (<section className='mt-5 flex flex-col gap-3 w-full'>
-                {
-                    users.map(user => {
-                        const { name, userName, isFollowing } = user
-                        return (
-                            <TarjetaSeguimientoX key={userName} name={name} userName={userName} initialIsFollowing={isFollowing} />
-                        )
-                    })
-                }
-                <span className='mt-5 text-left texto-especial'>Mostrar más</span>
-            </section>)
+            {ruta ? (
+                
+                    <section className='mt-5 flex flex-col gap-3 w-full'>
+                        {
+                            users.map(user => {
+                                const { name, userName, isFollowing } = user
+                                return (
+                                    <TarjetaSeguimientoX key={userName} name={name} userName={userName} initialIsFollowing={isFollowing} />
+                                )
+                            })
+                        }
+                        <span className='mt-5 text-left texto-especial'>Mostrar más</span>
+                    </section>
+
+                    )
                 : (<>
                     <div className='relative flex items-center'>
 
