@@ -3,6 +3,7 @@ import Button from "@mui/material/Button";
 import { GoogleLogin } from "@react-oauth/google";
 import AuthModal from "./AuthModal";
 import { useState } from "react";
+import { useTheme } from "../context/ThemeContext";
 
 
 const Autentificacion = ({ setIsAuthenticated }) => {
@@ -10,6 +11,7 @@ const Autentificacion = ({ setIsAuthenticated }) => {
   const [openAuthModal, setOpenAuthModal] = useState(false);
   const handleOpenAuthModal = () => setOpenAuthModal(true);
   const handleCloseAuthModal = () => setOpenAuthModal(false);
+  const { isDarkMode } = useTheme();
 
 
   return (
@@ -46,7 +48,7 @@ const Autentificacion = ({ setIsAuthenticated }) => {
 
             <div class="mt-5 flex w-[300px] my-2">
               <div class="flex-1 h-px bg-gray-200"></div>
-              <span class="px-4 text-black">o</span>
+              <span class={`px-4 ${isDarkMode ? "text-white" : "text-black"}`}>o</span>
               <div class="flex-1 h-px bg-gray-200"></div>
             </div>
 
