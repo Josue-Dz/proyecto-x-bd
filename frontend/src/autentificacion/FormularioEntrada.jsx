@@ -38,8 +38,9 @@ const FormularioEntrada = ({ setIsAuthenticated }) => {
   return (
     <form onSubmit={handleSubmit}>
       <div>
-        <div>
+        <div className="py-5">
           <TextField
+            className="bg-white rounded-3xl"
             fullWidth
             label="Correo"
             name="email"
@@ -51,6 +52,7 @@ const FormularioEntrada = ({ setIsAuthenticated }) => {
         </div>
         <div>
           <TextField
+            className="bg-white rounded-3xl"
             fullWidth
             label="Contraseña"
             name="password"

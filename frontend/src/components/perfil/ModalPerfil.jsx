@@ -3,11 +3,10 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import CloseIcon from '@mui/icons-material/Close';
-import { Avatar, Backdrop, colors, IconButton, TextField, useColorScheme } from '@mui/material';
+import { Avatar, IconButton, TextField} from '@mui/material';
 import { useFormik } from 'formik';
 import { useState } from 'react';
 import { useTheme } from '../../context/ThemeContext';
-import { blue, blueGrey } from '@mui/material/colors';
 
 
 export default function ModalPerfil({ open, handleClose }) {
