@@ -8,7 +8,7 @@ import Feed from "./Feed";
 import Tendencias from "./Tendencias";
 import Perfil from "../components/perfil/Perfil";
 import DetallesPost from "../components/detallespost/DetallesPost";
-import Explorar from "../components/explorar/explorar";
+import Explorar from "../components/explorar/Explorar";
 import Notificaciones from "../components/notificaciones/Notificaciones";
 import Mensajes from "../components/mensajes/Mensajes";
 import VerChat from "../components/mensajes/VerChat";
