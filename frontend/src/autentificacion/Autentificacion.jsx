@@ -22,7 +22,7 @@ const Autentificacion = ({ setIsAuthenticated }) => {
         <img
           className="w-full h-full object-cover"
           src="/assets/login.png"
-          alt="Twitter Illustration"
+          alt="X Illustration"
         />
         <div className="absolute top-[26%] left-[19%]">
           <img
