@@ -5,6 +5,7 @@ import PaginaPrincipal from './pages/PaginaPrincipal'
 import Autentificacion from './autentificacion/Autentificacion'
 import { ThemeProvider } from './context/ThemeContext'
 import { useEffect, useState } from 'react'
+import { SpeedInsights } from "@vercel/speed-insights/next"
 //import { useState } from 'react';
 
 function App() {

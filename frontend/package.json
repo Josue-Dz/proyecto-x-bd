@@ -17,6 +17,7 @@
     "@mui/material": "^6.4.7",
     "@react-oauth/google": "^0.12.1",
     "@tailwindcss/vite": "^4.0.14",
+    "@vercel/speed-insights": "^1.2.0",
     "formik": "^2.4.6",
     "frontend": "file:",
     "lightningcss": "^1.29.3",
