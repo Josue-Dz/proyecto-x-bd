@@ -86,8 +86,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         if (this.usuarioRepository.findByCorreo(authCreateUserRequest.correo()) == null) {
             Usuario usuario = new Usuario();
-            usuario.setNombre(authCreateUserRequest.nombre());
-            usuario.setApellido(authCreateUserRequest.apellido());
+            usuario.setNombreUsuario(authCreateUserRequest.nombreUsuario());
             usuario.setFechaNacimiento(authCreateUserRequest.fechaNacimiento());
             usuario.setCorreo(authCreateUserRequest.correo());
             usuario.setContrasenia(passwordEncoder.encode(authCreateUserRequest.contrasenia()));

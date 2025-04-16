@@ -45,9 +45,11 @@ public class Comentario {
 
     @ManyToOne 
     @JoinColumn(name = "codigo_usuario", referencedColumnName = "codigo_usuario")
+    @JsonIgnore
     private Usuario usuarioAutor; //Usuario autor del comentario
 
     @OneToMany(mappedBy = "comentario", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Like> likes; //Lista de likes del comentario
 
     @ManyToOne

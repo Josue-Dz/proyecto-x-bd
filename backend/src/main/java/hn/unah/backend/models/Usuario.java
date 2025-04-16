@@ -35,6 +35,7 @@ public class Usuario {
 
     //private String apellido;
 
+    @Column(name ="username")
     private String nombreUsuario; //En el perfil, la aplicación almacena todo lo que el usuario mete como input en el nombre, no lo separa entre nombre y apellido
 
     private String correo;
@@ -62,7 +63,7 @@ public class Usuario {
     private String informacion;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true) //Un usuario puede tener muchos posts
+    @OneToMany(mappedBy = "usuarioAutor", cascade = CascadeType.ALL, orphanRemoval = true) //Un usuario puede tener muchos posts
     private List<Post> posts;
 
     @OneToMany(mappedBy = "seguidor", cascade = CascadeType.ALL, orphanRemoval = true)
