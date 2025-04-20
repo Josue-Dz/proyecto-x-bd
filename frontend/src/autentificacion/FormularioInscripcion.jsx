@@ -2,10 +2,14 @@ import React from "react";
 import { Button, TextField, InputLabel, Select, MenuItem } from "@mui/material";
 import { blue } from "@mui/material/colors";
 import { useFormik } from "formik";
+import { useDispatch } from "react-redux";
+import { registroUsuario } from "../Store/Auth/Action";
+import { useNavigate } from "react-router-dom";
 
 const FormularioInscripcion = () => {
 
-    
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const currentYear = new Date().getFullYear();
   const years = Array.from({ length: 100 }, (_, i) => currentYear - i);
   const days = Array.from({ length: 31 }, (_, i) => i + 1);
@@ -26,19 +30,31 @@ const FormularioInscripcion = () => {
 
   const formik = useFormik({
     initialValues: {
-      fullName: "",
-      email: "",
+      nombreCompleto: "",
+      correo: "",
       password: "",
-      dateOfBirth: { day: "", month: "", year: "" },
+      fechaNacimiento: { day: "", month: "", year: "" },
     },
     onSubmit: (values) => {
+      const {day, month, year} = values.fechaNacimiento;
+
+    const formattedMonth = month.toString().padStart(2, "0");
+    const formattedDay = day.toString().padStart(2, "0");
+
+      const fechaNacimiento = `${year}-${formattedMonth}-${formattedDay}`;
       console.log("Datos enviados:", values);
+      values.fechaNacimiento = fechaNacimiento;
+
+      dispatch(registroUsuario(values));
+      navigate("/inicio");
+      
+
     },
   });
 
   const handleDateChange = (name) => (event) => {
-    formik.setFieldValue("dateOfBirth", {
-      ...formik.values.dateOfBirth,
+    formik.setFieldValue("fechaNacimiento", {
+      ...formik.values.fechaNacimiento,
       [name]: event.target.value,
     });
   };
@@ -53,9 +69,9 @@ const FormularioInscripcion = () => {
         <TextField
           fullWidth
           label="Nombre Completo"
-          name="fullName"
+          name="nombreCompleto"
           variant="outlined"
-          value={formik.values.fullName}
+          value={formik.values.nombreCompleto}
           onChange={formik.handleChange}
         />
       </div>
@@ -65,9 +81,9 @@ const FormularioInscripcion = () => {
         <TextField
           fullWidth
           label="Correo"
-          name="email"
+          name="correo"
           variant="outlined"
-          value={formik.values.email}
+          value={formik.values.correo}
           onChange={formik.handleChange}
         />
       </div>
@@ -93,7 +109,7 @@ const FormularioInscripcion = () => {
           <Select
             name="day"
             fullWidth
-            value={formik.values.dateOfBirth.day}
+            value={formik.values.fechaNacimiento.day}
             onChange={handleDateChange("day")}
           >
             {days.map((day) => (
@@ -110,7 +126,7 @@ const FormularioInscripcion = () => {
           <Select
             name="month"
             fullWidth
-            value={formik.values.dateOfBirth.month}
+            value={formik.values.fechaNacimiento.month}
             onChange={handleDateChange("month")}
           >
             {months.map((month) => (
@@ -127,7 +143,7 @@ const FormularioInscripcion = () => {
           <Select
             name="year"
             fullWidth
-            value={formik.values.dateOfBirth.year}
+            value={formik.values.fechaNacimiento.year}
             onChange={handleDateChange("year")}
           >
             {years.map((year) => (

@@ -4,27 +4,31 @@ import { Route, Routes } from 'react-router-dom'
 import PaginaPrincipal from './pages/PaginaPrincipal'
 import Autentificacion from './autentificacion/Autentificacion'
 import { ThemeProvider } from './context/ThemeContext'
-import { useEffect, useState } from 'react'
-import { SpeedInsights } from "@vercel/speed-insights/next"
-//import { useState } from 'react';
+import { useEffect} from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { obtenerPerfilUsuario } from './Store/Auth/Action'
 
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(() => 
-    JSON.parse(localStorage.getItem("isAuthenticated")) || false
-  );
 
-  useEffect(() => {localStorage.setItem("isAuthenticated", 
-    JSON.stringify(isAuthenticated))}, [isAuthenticated]);
+  const jwt = localStorage.getItem("jwtToken");
 
+  const {auth} = useSelector(store => store);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (jwt) {
+      dispatch(obtenerPerfilUsuario(jwt));
+    } 
+  }, [jwt])
+
+  
   return (
     <ThemeProvider>
       <Routes>
         <Route
           path="/*"
-          element={isAuthenticated ? <PaginaPrincipal setIsAuthenticated={setIsAuthenticated} /> 
-            : <Autentificacion setIsAuthenticated={setIsAuthenticated} />}
+          element={auth.user ? <PaginaPrincipal /> : <Autentificacion />}
         />
-        <Route path="/signin" element={<Autentificacion setIsAuthenticated={setIsAuthenticated}/>}></Route>
       </Routes>
     </ThemeProvider>
   );

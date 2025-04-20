@@ -1,6 +1,7 @@
 package hn.unah.backend.services;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +35,7 @@ public class PostService {
     private ComentarioRepository comentarioRepository;
 
 
-    public Post crearPost(PostDto nvoPost) {
+    public PostDto crearPost(PostDto nvoPost) {
         Usuario autor = usuarioRepository.findById(nvoPost.getCodigoUsuario())
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
     
@@ -43,7 +44,7 @@ public class PostService {
             comunidad = comunidadRepository.findById(nvoPost.getCodigoComunidad())
                     .orElseThrow(() -> new RuntimeException("Comunidad no encontrada"));
         }
-    
+       
         Post nuevoPost = new Post();
         nuevoPost.setUsuarioAutor(autor);
         nuevoPost.setComunidad(comunidad);
@@ -51,35 +52,45 @@ public class PostService {
         nuevoPost.setMultimedia(nvoPost.getMultimedia());
         nuevoPost.setFechaPost(LocalDateTime.now());
     
-        return postRepository.save(nuevoPost);
+        nuevoPost = postRepository.save(nuevoPost);
+
+        return aPostDto(nuevoPost);
+
     }
 
 
-    public List<Post> obtenerTodosLosPosts() {
-        return postRepository.findAll();
+    public List<PostDto> obtenerTodosLosPosts() {
+
+        List<Post> posts = postRepository.findAll();
+
+        return aPostDtos(posts);
     }
 
 
-    public Post obtenerPostPorId(Integer codigoPost) {
-        Post post = postRepository.findById(codigoPost).orElse(null);
+    public PostDto obtenerPostPorId(Integer codigoPost) {
+        Post post = postRepository.findById(codigoPost).get();
         
         if (post == null) {
             throw new RuntimeException("Post con ID " + codigoPost + " no encontrado");
         }
         
-        return post;
+        return aPostDto(post);
     }
 
 
-    public Comentario contestarPost(ComentarioDto comentarioDto) {
+    public ComentarioDto contestarPost(ComentarioDto comentarioDto) {
         
-        Post post = postRepository.findById(comentarioDto.getCodigoPost())
-                .orElseThrow(() -> new RuntimeException("Post no encontrado"));
+        Post post = postRepository.findById(comentarioDto.getCodigoPost()).get();
 
+        if (post == null) {
+            throw new RuntimeException("Post con ID " + comentarioDto.getCodigoPost() + " no encontrado");
+        }
         
-        Usuario usuario = usuarioRepository.findById(comentarioDto.getCodigoUsuarioAutor())
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+        Usuario usuario = usuarioRepository.findById(comentarioDto.getCodigoUsuarioAutor()).get();
 
+        if (usuario == null) {
+            throw new RuntimeException("Usuario con ID " + comentarioDto.getCodigoUsuarioAutor() + " no encontrado");
+        }
         
         Comentario comentario = new Comentario();
         comentario.setContenido(comentarioDto.getContenido());
@@ -88,17 +99,57 @@ public class PostService {
         comentario.setFechaComentario(LocalDateTime.now());
 
         // Guardar el comentario en la base de datos
-        return comentarioRepository.save(comentario);
+        comentario = comentarioRepository.save(comentario);
+
+        return aComentarioDto(comentario);
     }
 
 
-    public List<Post> obtenerPostsPorUsuario(int codigoUsuario) {
+    public List<PostDto> obtenerPostsPorUsuario(int codigoUsuario) {
         // Buscar al usuario por su código
-        Usuario usuario = usuarioRepository.findById(codigoUsuario)
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+        Usuario usuario = usuarioRepository.findById(codigoUsuario).get();
+
+        if (usuario == null) {
+            throw new RuntimeException("Usuario con ID " + codigoUsuario + " no encontrado");
+        }
 
         // Obtener todos los posts del usuario
-        return postRepository.findByUsuarioAutor(usuario);
+        List<Post> listaPost = postRepository.findByUsuarioAutor(usuario);
+
+        return aPostDtos(listaPost);
     }
 
+    private PostDto aPostDto(Post post) {
+
+        PostDto postDto = new PostDto();
+    
+
+        postDto.setCodigoPost(post.getCodigoPost());
+        postDto.setCodigoUsuario(post.getUsuarioAutor().getCodigoUsuario());
+        postDto.setContenido(post.getContenido());
+        postDto.setMultimedia(post.getMultimedia());
+        postDto.setFechaPost(post.getFechaPost());
+
+        return postDto;
+    }
+
+    private List<PostDto> aPostDtos(List<Post> posts) {
+        List<PostDto> postDtos = new ArrayList<>();
+
+        for (Post post : posts) {
+            PostDto postDto = aPostDto(post);
+            postDtos.add(postDto);
+        }
+
+        return postDtos;
+    }
+
+    public ComentarioDto aComentarioDto(Comentario comentario){
+        ComentarioDto comentarioDto = new ComentarioDto();
+        comentarioDto.setCodigoPost(comentario.getPost().getCodigoPost());
+        comentarioDto.setCodigoUsuarioAutor(comentario.getUsuarioAutor().getCodigoUsuario());
+        comentarioDto.setContenido(comentario.getContenido());
+
+        return comentarioDto;
+    }
 }

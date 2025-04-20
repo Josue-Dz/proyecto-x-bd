@@ -11,12 +11,14 @@ import BarChartRoundedIcon from "@mui/icons-material/BarChartRounded";
 import BookmarkBorderRoundedIcon from "@mui/icons-material/BookmarkBorderRounded";
 import FileUploadRoundedIcon from "@mui/icons-material/FileUploadRounded";
 import BookmarkRoundedIcon from "@mui/icons-material/BookmarkRounded";
+import { useSelector } from "react-redux";
 
 import ModalResponder from "../components/perfil/ModalResponder";
 
 const Post = () => {
   const navigate = useNavigate();
 
+  const {auth} = useSelector(store => store);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
 
@@ -55,13 +57,13 @@ const Post = () => {
         />
         <div className="flex flex-col  items-start cursor-pointer ml-2  ">
           <div className="font-semibold  flex items-center justify-evenly">
-            <span className="mr-0.5">Ronny, José Daniel y Aída</span>
+            <span className="mr-0.5">{auth.user?.nombreCompleto}</span>
             <img
               className="w-4 h-4 mr-1"
               src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Twitter_Verified_Badge.svg/512px-Twitter_Verified_Badge.svg.png?20230807021642"
               alt=""
             />
-            <span className="font-normal text-gray-600 text-sm">@proyectobd1 · Mar 14</span>
+            <span className="font-normal text-gray-600 text-sm">@{auth.user?.nombreUsuario.toLowerCase()} · Mar 14</span>
           </div>
           <p className="mb-2 p-0">Gato en una computadora</p>
         </div>

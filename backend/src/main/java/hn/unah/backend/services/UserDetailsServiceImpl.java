@@ -1,5 +1,6 @@
 package hn.unah.backend.services;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +53,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     }
 
     public AuthResponse inicioSesion(AuthLoginRequest authLoginRequest) {
-        String correo = authLoginRequest.username();
+        String correo = authLoginRequest.email();
         String contrasenia = authLoginRequest.password();
         
         try {
@@ -68,14 +69,14 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     }
 
-    public Authentication authenticate(String correo, String contrasenia) {
+    public Authentication authenticate(String correo, String password) {
         UserDetails userDetails = this.loadUserByUsername(correo);
 
         if (userDetails == null) {
             throw new BadCredentialsException("Correo o contraseña inválidos");
         }
 
-        if (!passwordEncoder.matches(contrasenia, userDetails.getPassword())) {
+        if (!passwordEncoder.matches(password, userDetails.getPassword())) {
             throw new BadCredentialsException("Contraseña incorrecta");
         }
 
@@ -84,12 +85,22 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     public AuthResponse registrarUsuario(AuthCreateUserRequest authCreateUserRequest) {
 
+        String nombreBase = authCreateUserRequest.nombreCompleto().split(" ")[0]; // Obtener el primer nombre
+        String nombreUsuario;
+
+        do {
+            int numeroAleatorio = (int) (Math.random() * 1000); // Generar número aleatorio
+            nombreUsuario = nombreBase + numeroAleatorio; // Concatenar nombre y número
+        } while (this.usuarioRepository.findByNombreUsuario(nombreUsuario) != null);
+
         if (this.usuarioRepository.findByCorreo(authCreateUserRequest.correo()) == null) {
             Usuario usuario = new Usuario();
-            usuario.setNombreUsuario(authCreateUserRequest.nombreUsuario());
+            usuario.setNombreCompleto(authCreateUserRequest.nombreCompleto());
+            usuario.setNombreUsuario(nombreUsuario);
             usuario.setFechaNacimiento(authCreateUserRequest.fechaNacimiento());
+            usuario.setFechaRegistro(LocalDateTime.now());
             usuario.setCorreo(authCreateUserRequest.correo());
-            usuario.setContrasenia(passwordEncoder.encode(authCreateUserRequest.contrasenia()));
+            usuario.setContrasenia(passwordEncoder.encode(authCreateUserRequest.password()));
 
             Usuario usuarioCreado = this.usuarioRepository.save(usuario);
 

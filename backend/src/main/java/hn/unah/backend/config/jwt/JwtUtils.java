@@ -73,4 +73,17 @@ public class JwtUtils {
         return decodedJWT.getClaims();
     }
 
+    public String getEmailFromToken(String token) {
+        try {
+            // Valida el token y obtiene el objeto DecodedJWT
+            DecodedJWT decodedJWT = validateToken(token);
+    
+            // Extrae el email (almacenado como "subject")
+            return extractUsername(decodedJWT);
+        } catch (JWTVerificationException e) {
+            log.error("Error al obtener el email del token: {}", e.getMessage());
+            throw e;
+        }
+    }
+
 }

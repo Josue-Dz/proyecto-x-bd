@@ -15,6 +15,8 @@ import FlashOnRoundedIcon from "@mui/icons-material/FlashOnRounded";
 import PermIdentityRoundedIcon from "@mui/icons-material/PermIdentityRounded";
 import PendingOutlinedIcon from '@mui/icons-material/PendingOutlined';
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import { useSelector, useDispatch } from "react-redux";
+import { cerrarSesion } from "../Store/Auth/Action";
 
 const menuNav = [
   { title: "Inicio", icon: <HomeRoundedIcon />, path: "/inicio" },
@@ -32,6 +34,8 @@ const menuNav = [
 const MenuX = ({ setOpenModal, setIsAuthenticated }) => {
   const navigate = useNavigate();
   const { isDarkMode } = useTheme();
+  const {auth} = useSelector(store => store);
+  const dispatch = useDispatch();
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -44,10 +48,10 @@ const MenuX = ({ setOpenModal, setIsAuthenticated }) => {
     setAnchorEl(null);
   };
 
-  const handleLogout = () => {
-    setIsAuthenticated(false); 
+  const handleLogout = () => { 
     handleClose();
-    navigate("/signin");
+    dispatch(cerrarSesion())
+    // navigate("/signin");
   };
 
 
@@ -116,8 +120,8 @@ const MenuX = ({ setOpenModal, setIsAuthenticated }) => {
         </div>
 
         <div className="flex flex-col ml-2">
-          <span className="font-bold text-left truncate w-[150px] text-sm">Ronny, José Daniel y Aída</span>
-          <span className="text-left text-sm opacity-70">@proyectoBD1</span>
+          <span className="font-bold text-left truncate w-[150px] text-sm">{auth.user?.nombreCompleto}</span>
+          <span className="text-left text-sm opacity-70">@{auth.user?.nombreUsuario.toLowerCase()}</span>
         </div>
         <Button 
           disableRipple

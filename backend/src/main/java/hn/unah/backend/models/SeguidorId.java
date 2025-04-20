@@ -1,8 +1,12 @@
 package hn.unah.backend.models;
 
 import java.io.Serializable;
-import java.util.Objects;
+
+import jakarta.persistence.Embeddable;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,23 +15,16 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
+@Embeddable
+@EqualsAndHashCode
 public class SeguidorId implements Serializable{
 
-    private int seguidor;
-    private int seguido;
+    @ManyToOne
+    @JoinColumn(name = "codigo_usuario_seguidor")
+    private Usuario seguidor;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof SeguidorId)) return false;
-        SeguidorId that = (SeguidorId) o;
-        return Objects.equals(seguidor, that.seguidor) &&
-               Objects.equals(seguido, that.seguido);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(seguidor, seguido);
-    }
+    @ManyToOne
+    @JoinColumn(name = "codigo_usuario_seguido")
+    private Usuario seguido;
     
 }

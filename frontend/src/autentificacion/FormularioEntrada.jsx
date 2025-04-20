@@ -2,41 +2,36 @@ import { Button, TextField } from "@mui/material";
 import { blue } from "@mui/material/colors";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom"; 
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { useDispatch } from "react-redux";
+import { loginUsuario } from "../Store/Auth/Action";
 
-const FormularioEntrada = ({ setIsAuthenticated }) => { 
+
+const validationSchema = Yup.object({
+  email: Yup.string().email("Correo invalido").required("Correo electrónico requerido"),
+  password: Yup.string().required("Contraseña requerida"),
+})
+
+const FormularioEntrada = () => { 
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
-  
 
-  const CREDENTIALS = {
-    email: "AidaRonnyDaniel@unah.hn",
-    password: "123456",
-  };
-
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-
-    if (formData.email === CREDENTIALS.email && formData.password === CREDENTIALS.password) {
-      setIsAuthenticated(true); 
-      navigate("/inicio"); 
-    } else {
-      alert("Credenciales incorrectas. AidaRonnyDaniel@unah.hn / 123456");
-    }
-  };
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    validationSchema,
+    onSubmit: (values) => {
+        dispatch(loginUsuario(values));
+        navigate("/inicio");
+        console.log("form value ", values)
+      }
+  })
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={formik.handleSubmit}>
       <div>
         <div className="py-5">
           <TextField
@@ -46,8 +41,9 @@ const FormularioEntrada = ({ setIsAuthenticated }) => {
             name="email"
             variant="outlined"
             size="large"
-            value={formData.email}
-            onChange={handleChange}
+            value={formik.values.email}
+            onChange={formik.handleChange}
+            error={formik.touched.email && Boolean(formik.errors.email)}
           />
         </div>
         <div>
@@ -59,8 +55,9 @@ const FormularioEntrada = ({ setIsAuthenticated }) => {
             type="password"
             variant="outlined"
             size="large"
-            value={formData.password}
-            onChange={handleChange}
+            value={formik.values.password}
+            onChange={formik.handleChange}
+            error={formik.touched.password && Boolean(formik.errors.password)}
           />
         </div>
         <div className="mt-20">
