@@ -58,10 +58,9 @@ public class Post {
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<Repost> reposteos;
- 
 
-@ManyToOne
-@JoinColumn(name = "codigo_comunidad", referencedColumnName = "codigo_comunidad")
-private Comunidad comunidad;
+    //@ManyToOne
+    //@JoinColumn(name = "codigo_comunidad", referencedColumnName = "codigo_comunidad")
+    //private Comunidad comunidad;
 
 }

@@ -1,6 +1,7 @@
 package hn.unah.backend.dtos;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,13 +23,19 @@ public class PostDto {
 
     private LocalDateTime fechaPost;
 
-     private int cantidadLikes;
+    private UsuarioDto usuarioAutor;
+
+    private List<LikeDto> likes;
+
+    private List<ComentarioDto> comentarios;
+
+    private List<RepostDto> reposteos;
+
+    private int cantidadLikes;
 
     private int cantidadComentarios;
 
     private int cantidadReposteos;
-
-    private Integer codigoUsuario;      // ID del autor del post
 
     private Integer codigoComunidad; 
 }

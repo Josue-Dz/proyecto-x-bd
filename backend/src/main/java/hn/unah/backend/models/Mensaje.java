@@ -20,26 +20,30 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-@Table(name = "likes")
-public class Like {
+@Table(name = "mensajes")
+public class Mensaje {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "codigo_like")
-    private int codigoLike;
-
-    @Column(name = "fecha_like_publicacion")
-    private LocalDateTime fechaLike;
+    @Column(name = "codigo_mensaje")
+    private int codigoMensaje;
 
     @ManyToOne
-    @JoinColumn(name = "codigo_post", referencedColumnName = "codigo_post")
-    private Post post;
+    @JoinColumn(name = "codigo_usuario_emisor", referencedColumnName = "codigo_usuario")
+    private Usuario usuarioEmisor;
 
     @ManyToOne
-    @JoinColumn(name = "codigo_comentario", referencedColumnName = "codigo_comentario")
-    private Comentario comentario;
+    @JoinColumn(name = "codigo_usuario_receptor", referencedColumnName = "codigo_usuario")
+    private Usuario usuarioReceptor;
 
-    @ManyToOne
-    @JoinColumn(name = "codigo_usuario", referencedColumnName = "codigo_usuario")
-    private Usuario usuario;
+    @Column(name = "fecha_enviado")
+    private LocalDateTime fechaEnviado;
+
+    @Column(name = "contenido_mensaje")
+    private String contenido;
+
+    @Column(name = "multimedia_mensaje")
+    private String multimedia;
+
+    
 }

@@ -137,7 +137,7 @@ public class UsuarioService {
     }
 
 
-    private UsuarioDto usuarioADto(Usuario usuario){
+    public UsuarioDto usuarioADto(Usuario usuario){
         UsuarioDto usuarioDto = new UsuarioDto();
 
         usuarioDto.setId(usuario.getCodigoUsuario());

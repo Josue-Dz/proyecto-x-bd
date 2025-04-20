@@ -51,5 +51,15 @@ public class UsuarioDto {
 
     private boolean isVerified;
 
+    private List<PostDto> posts;
+
+    private List<RepostDto> reposteos;
+
+    private List<LikeDto> likes;
+
+    private List<MensajeDto> mensajesRecibidos;
+
+    private List<MensajeDto> mensajesEnviados;
+
     //Faltan campos por definir
 }

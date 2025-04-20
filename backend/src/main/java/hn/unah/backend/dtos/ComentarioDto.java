@@ -1,5 +1,7 @@
 package hn.unah.backend.dtos;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,9 +13,13 @@ import lombok.Setter;
 @Setter
 public class ComentarioDto {
 
+    private int codigoComentario;
+
     private String contenido;
 
-    private int codigoPost;
+    private PostDto postDto;
 
-    private int codigoUsuarioAutor;
+    private UsuarioDto usuarioAutorDto;
+
+    private List<RepostDto> reposteos;
 }

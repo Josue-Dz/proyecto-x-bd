@@ -26,8 +26,9 @@ public class PostController {
     @GetMapping("/crearPost")
     public ResponseEntity<PostDto> crearPost(@RequestBody PostDto nvoPost) {
         
-        PostDto postDto = this.postService.crearPost(nvoPost);
-        return ResponseEntity.ok(postDto);
+        //PostDto postDto = this.postService.crearPost(nvoPost);
+        //return ResponseEntity.ok(postDto);
+        return null;
     }
 
     @GetMapping("/obtenerTodosLosPost")
@@ -47,15 +48,17 @@ public class PostController {
     @GetMapping("/contestarPost")
     public ResponseEntity<ComentarioDto> contestarPost(@RequestBody ComentarioDto nvoComentario){
         
-        ComentarioDto comentarioDto = this.postService.contestarPost(nvoComentario);
-        return ResponseEntity.ok(comentarioDto);
+        //ComentarioDto comentarioDto = this.postService.contestarPost(nvoComentario);
+        //return ResponseEntity.ok(comentarioDto);
+        return null;
     }
 
     @GetMapping("/obtenerPostPorUsuario/{id}")
     public ResponseEntity<List<PostDto>> obtenerPostPorUsuario(@PathVariable(name = "id")int id){
         
-        List<PostDto> comentariosDtos = this.postService.obtenerPostsPorUsuario(id);
-        return ResponseEntity.ok(comentariosDtos);
+        //List<PostDto> comentariosDtos = this.postService.obtenerPostsPorUsuario(id);
+        //return ResponseEntity.ok(comentariosDtos);
+        return null;
     }
 
 }

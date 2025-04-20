@@ -7,10 +7,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import hn.unah.backend.dtos.ComentarioDto;
 import hn.unah.backend.dtos.PostDto;
-import hn.unah.backend.models.Comentario;
-import hn.unah.backend.models.Comunidad;
+import hn.unah.backend.dtos.UsuarioDto;
 import hn.unah.backend.models.Post;
 import hn.unah.backend.models.Usuario;
 import hn.unah.backend.repositories.ComentarioRepository;
@@ -20,7 +18,6 @@ import hn.unah.backend.repositories.UsuarioRepository;
 
 @Service
 public class PostService {
-    
 
     @Autowired
     private PostRepository postRepository;
@@ -34,30 +31,23 @@ public class PostService {
     @Autowired
     private ComentarioRepository comentarioRepository;
 
+    @Autowired
+    private ComentarioService comentarioService;
 
-    public PostDto crearPost(PostDto nvoPost) {
-        Usuario autor = usuarioRepository.findById(nvoPost.getCodigoUsuario())
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
-    
-        Comunidad comunidad = null;
-        if (nvoPost.getCodigoComunidad() != null) {
-            comunidad = comunidadRepository.findById(nvoPost.getCodigoComunidad())
-                    .orElseThrow(() -> new RuntimeException("Comunidad no encontrada"));
-        }
+
+    public PostDto crearPost(Post post, Usuario usuarioAutor) {
        
-        Post nuevoPost = new Post();
-        nuevoPost.setUsuarioAutor(autor);
-        nuevoPost.setComunidad(comunidad);
-        nuevoPost.setContenido(nvoPost.getContenido());
-        nuevoPost.setMultimedia(nvoPost.getMultimedia());
-        nuevoPost.setFechaPost(LocalDateTime.now());
+        Post nvoPost = new Post();
+        nvoPost.setContenido(post.getContenido());
+        nvoPost.setMultimedia(post.getMultimedia());
+        nvoPost.setFechaPost(LocalDateTime.now());
+        nvoPost.setUsuarioAutor(usuarioAutor);
     
-        nuevoPost = postRepository.save(nuevoPost);
+        nvoPost = postRepository.save(nvoPost);
 
-        return aPostDto(nuevoPost);
+        return aPostDto(nvoPost);
 
     }
-
 
     public List<PostDto> obtenerTodosLosPosts() {
 
@@ -77,41 +67,11 @@ public class PostService {
         return aPostDto(post);
     }
 
-
-    public ComentarioDto contestarPost(ComentarioDto comentarioDto) {
-        
-        Post post = postRepository.findById(comentarioDto.getCodigoPost()).get();
-
-        if (post == null) {
-            throw new RuntimeException("Post con ID " + comentarioDto.getCodigoPost() + " no encontrado");
-        }
-        
-        Usuario usuario = usuarioRepository.findById(comentarioDto.getCodigoUsuarioAutor()).get();
-
-        if (usuario == null) {
-            throw new RuntimeException("Usuario con ID " + comentarioDto.getCodigoUsuarioAutor() + " no encontrado");
-        }
-        
-        Comentario comentario = new Comentario();
-        comentario.setContenido(comentarioDto.getContenido());
-        comentario.setPost(post);
-        comentario.setUsuarioAutor(usuario);
-        comentario.setFechaComentario(LocalDateTime.now());
-
-        // Guardar el comentario en la base de datos
-        comentario = comentarioRepository.save(comentario);
-
-        return aComentarioDto(comentario);
+    public void borrarPostPorId(int codigoPost, int codigoUsuario){
+        //ver si este método es necesario
     }
 
-
-    public List<PostDto> obtenerPostsPorUsuario(int codigoUsuario) {
-        // Buscar al usuario por su código
-        Usuario usuario = usuarioRepository.findById(codigoUsuario).get();
-
-        if (usuario == null) {
-            throw new RuntimeException("Usuario con ID " + codigoUsuario + " no encontrado");
-        }
+    public List<PostDto> obtenerPostsPorUsuario(Usuario usuario) {
 
         // Obtener todos los posts del usuario
         List<Post> listaPost = postRepository.findByUsuarioAutor(usuario);
@@ -119,13 +79,20 @@ public class PostService {
         return aPostDtos(listaPost);
     }
 
-    private PostDto aPostDto(Post post) {
+    public List<PostDto> obtenerPostsLikeadosPorUsuario(){
+        return null;
+    }
+
+    public PostDto aPostDto(Post post) {
 
         PostDto postDto = new PostDto();
-    
 
         postDto.setCodigoPost(post.getCodigoPost());
-        postDto.setCodigoUsuario(post.getUsuarioAutor().getCodigoUsuario());
+
+        UsuarioDto usuarioDto = new UsuarioDto();
+        usuarioDto.setId(post.getUsuarioAutor().getCodigoUsuario());
+        postDto.setUsuarioAutor(usuarioDto);
+
         postDto.setContenido(post.getContenido());
         postDto.setMultimedia(post.getMultimedia());
         postDto.setFechaPost(post.getFechaPost());
@@ -144,12 +111,4 @@ public class PostService {
         return postDtos;
     }
 
-    public ComentarioDto aComentarioDto(Comentario comentario){
-        ComentarioDto comentarioDto = new ComentarioDto();
-        comentarioDto.setCodigoPost(comentario.getPost().getCodigoPost());
-        comentarioDto.setCodigoUsuarioAutor(comentario.getUsuarioAutor().getCodigoUsuario());
-        comentarioDto.setContenido(comentario.getContenido());
-
-        return comentarioDto;
-    }
 }

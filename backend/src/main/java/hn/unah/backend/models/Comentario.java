@@ -63,4 +63,8 @@ public class Comentario {
     @JsonIgnore
     @OneToMany(mappedBy = "comentarioSuperior", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comentario> respuestas; //Lista de respuestas al comentario
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<Repost> reposteos;
 }
