@@ -10,10 +10,12 @@ import hn.unah.backend.models.Like;
 @Repository
 public interface LikeRepository extends JpaRepository<Like, Integer>{
 
-    public Like existeLike(int codigoUsuario, int codigoPost);
+    public Like findByUsuarioCodigoUsuarioAndPostCodigoPost(int codigoUsuario, int codigoPost);
 
-    public List<Like> obtenerLikesPorPostId(int codigoPost);
+    public Like findByUsuarioCodigoUsuarioAndComentarioCodigoComentario(int codigoUsuario, int codigoComentario);
 
-    public List<Like> obtenerLikesPorComentarioId(int codigoComentario);
+    public List<Like> findByPostCodigoPost(int codigoPost);
+
+    public List<Like> findByComentarioCodigoComentario(int codigoComentario);
       
 }

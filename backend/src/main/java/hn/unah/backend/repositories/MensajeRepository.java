@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import hn.unah.backend.models.Mensaje;
 
 @Repository
-public interface MensajeRepository extends JpaRepository<Integer, Mensaje> {
+public interface MensajeRepository extends JpaRepository<Mensaje, Integer> {
 
     
 }

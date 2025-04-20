@@ -79,8 +79,11 @@ public class PostService {
         return aPostDtos(listaPost);
     }
 
-    public List<PostDto> obtenerPostsLikeadosPorUsuario(){
-        return null;
+    public List<PostDto> obtenerPostsLikeadosPorUsuario(Usuario usuario){
+
+        List<Post> posts = postRepository.findPostsLikedByUsuario(usuario.getCodigoUsuario());
+
+        return aPostDtos(posts);
     }
 
     public PostDto aPostDto(Post post) {

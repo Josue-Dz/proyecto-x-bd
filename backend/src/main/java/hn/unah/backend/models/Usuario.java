@@ -85,10 +85,10 @@ public class Usuario {
     @OneToMany(mappedBy = "usuario", orphanRemoval = true)
     private List<Repost> reposteos;
 
-    @OneToMany(mappedBy = "emisor", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "usuarioEmisor", cascade = CascadeType.ALL)
     private List<Mensaje> mensajesEnviados;
 
-    @OneToMany(mappedBy = "receptor", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "usuarioReceptor", cascade = CascadeType.ALL)
     private List<Mensaje> mensajesRecibidos;
 
     //agregar private List<Twit> twits;  // y su relacion

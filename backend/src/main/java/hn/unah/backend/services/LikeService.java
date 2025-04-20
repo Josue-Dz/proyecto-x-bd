@@ -44,7 +44,7 @@ public class LikeService {
     private UsuarioService usuarioService;
 
     public LikeDto darLikePost(int codigoPost, Usuario usuarioQueDaraLike){
-        Like like = likeRepository.existeLike(usuarioQueDaraLike.getCodigoUsuario(), codigoPost);
+        Like like = likeRepository.findByUsuarioCodigoUsuarioAndPostCodigoPost(usuarioQueDaraLike.getCodigoUsuario(), codigoPost);
 
         if(like != null){
             likeRepository.deleteById(like.getCodigoLike());
@@ -66,7 +66,7 @@ public class LikeService {
     }
 
     public LikeDto darLikeComentario(int codigoComentario, Usuario usuarioQueDaraLike){
-        Like like = likeRepository.existeLike(usuarioQueDaraLike.getCodigoUsuario(), codigoComentario);
+        Like like = likeRepository.findByUsuarioCodigoUsuarioAndComentarioCodigoComentario(usuarioQueDaraLike.getCodigoUsuario(), codigoComentario);
 
         if(like != null){
             likeRepository.deleteById(like.getCodigoLike());
@@ -91,7 +91,7 @@ public class LikeService {
         Post post = postRepository.findById(codigoPost).get();
 
         if(post != null){
-            List<Like> likes = likeRepository.obtenerLikesPorPostId(codigoPost);
+            List<Like> likes = likeRepository.findByPostCodigoPost(codigoPost);
             return aLikeDtos(likes);
         }
 
@@ -102,7 +102,7 @@ public class LikeService {
         Comentario comentario = comentarioRepository.findById(codigoComentario).get();
 
         if(comentario != null){
-            List<Like> likes = likeRepository.obtenerLikesPorComentarioId(codigoComentario);
+            List<Like> likes = likeRepository.findByComentarioCodigoComentario(codigoComentario);
             return aLikeDtos(likes);
         }
 
