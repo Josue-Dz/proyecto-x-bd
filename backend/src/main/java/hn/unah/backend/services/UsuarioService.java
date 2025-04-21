@@ -1,7 +1,6 @@
 package hn.unah.backend.services;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -27,6 +26,9 @@ public class UsuarioService {
 
     @Autowired
     private JwtUtils jwtUtils;
+
+    @Autowired
+    private DtoMapperService dtoMapperService;
 
     public UsuarioDto actualizarUsuario(int codigoUsuario, UsuarioDto usuarioDto){
         Usuario usuario = usuarioRepository.findById(codigoUsuario).get();
@@ -63,7 +65,7 @@ public class UsuarioService {
             
             this.usuarioRepository.save(usuario);
 
-            UsuarioDto usuarioActualizado = usuarioADto(usuario);
+            UsuarioDto usuarioActualizado = dtoMapperService.usuarioADto(usuario);
   
             return usuarioActualizado;
         }
@@ -75,7 +77,7 @@ public class UsuarioService {
         String correo = jwtUtils.getEmailFromToken(jwt);
         Usuario usuario = this.usuarioRepository.findByCorreo(correo);
 
-        return usuarioADto(usuario);
+        return dtoMapperService.usuarioADto(usuario);
     }
 
 
@@ -84,7 +86,7 @@ public class UsuarioService {
 
         if (usuarioEncontrado != null){
 
-            UsuarioDto usuarioDto = usuarioADto(usuarioEncontrado);
+            UsuarioDto usuarioDto = dtoMapperService.usuarioADto(usuarioEncontrado);
             
             return usuarioDto;
         }
@@ -98,7 +100,7 @@ public class UsuarioService {
         Usuario usuarioASeguir = this.usuarioRepository.findById(idUsuarioASeguir).get();
         Usuario usuarioSeguidor = this.usuarioRepository.findById(usuarioSeguidorDto.getId()).get();
 
-        UsuarioDto usuarioASeguirDto = usuarioADto(usuarioASeguir);
+        UsuarioDto usuarioASeguirDto = dtoMapperService.usuarioADto(usuarioASeguir);
 
         if (this.seguidorRepository.existsById(new SeguidorId(usuarioSeguidor, usuarioASeguir))){
             
@@ -125,7 +127,7 @@ public class UsuarioService {
 
             for (Usuario usuario : usuarios){
 
-                UsuarioDto usuarioDto = usuarioADto(usuario);
+                UsuarioDto usuarioDto = dtoMapperService.usuarioADto(usuario);
 
                 usuariosDto.add(usuarioDto);
             }
@@ -135,74 +137,5 @@ public class UsuarioService {
 
         return null;
     }
-
-
-    public UsuarioDto usuarioADto(Usuario usuario){
-        UsuarioDto usuarioDto = new UsuarioDto();
-
-        usuarioDto.setId(usuario.getCodigoUsuario());
-        usuarioDto.setNombreCompleto(usuario.getNombreCompleto());
-        usuarioDto.setNombreUsuario(usuario.getNombreUsuario());
-        usuarioDto.setCorreo(usuario.getCorreo());
-        //usuarioDto.setTelefono(usuario.getTelefono());
-        usuarioDto.setFechaNacimiento(usuario.getFechaNacimiento());
-        //usuarioDto.setFechaRegistro(usuario.getFechaRegistro());
-        usuarioDto.setFotoPerfil(usuario.getFotoPerfil());
-        usuarioDto.setFotoPortada(usuario.getFotoPortada());
-        usuarioDto.setBiografia(usuario.getBiografia());
-        usuarioDto.setInformacion(usuario.getInformacion());
-        usuarioDto.setUbicacion(usuario.getUbicacion());
-        //usuarioDto.setSitioWeb(usuario.getSitioWeb());
-        usuarioDto.setSiguiendo(usuariosAdtos(usuario.getSiguiendo(), false));
-        usuarioDto.setSeguidores(usuariosAdtos(usuario.getSeguidores(), true));
-
-
-        return usuarioDto;
-    }
-
-    
-
-    private List<UsuarioDto> usuariosAdtos(List<Seguidor> seguidores, boolean isSeguidores){
-        List<UsuarioDto> listaSeguidores = new ArrayList<>();
-        Usuario usuario = new Usuario();
-        int codigoUsuario = 0;
-
-            if (isSeguidores){
-                for(Seguidor seguidor : seguidores){
-                    codigoUsuario = seguidor.getId().getSeguidor().getCodigoUsuario();
-                    usuario = this.usuarioRepository.findById(codigoUsuario).get();
-
-                    UsuarioDto usuarioDto = new UsuarioDto();
-                    usuarioDto.setId(usuario.getCodigoUsuario());
-                    usuarioDto.setNombreCompleto(usuario.getNombreCompleto());
-                    usuarioDto.setNombreUsuario(usuario.getNombreUsuario());
-                    usuarioDto.setCorreo(usuario.getCorreo());
-                    usuarioDto.setFotoPerfil(usuario.getFotoPerfil());
-
-                    listaSeguidores.add(usuarioDto);
-
-                }
-            }else{
-
-                for(Seguidor seguidor : seguidores){
-                    codigoUsuario = seguidor.getId().getSeguido().getCodigoUsuario();
-                    usuario = this.usuarioRepository.findById(codigoUsuario).get();
-                    
-                    UsuarioDto usuarioDto = new UsuarioDto();
-                    usuarioDto.setId(usuario.getCodigoUsuario());
-                    usuarioDto.setNombreCompleto(usuario.getNombreCompleto());
-                    usuarioDto.setNombreUsuario(usuario.getNombreUsuario());
-                    usuarioDto.setCorreo(usuario.getCorreo());
-                    usuarioDto.setFotoPerfil(usuario.getFotoPerfil());
-    
-                    listaSeguidores.add(usuarioDto);
-
-                }
-            }
-            
-
-        return listaSeguidores;
-    }
-
 
 }

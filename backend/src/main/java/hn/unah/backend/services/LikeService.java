@@ -1,15 +1,11 @@
 package hn.unah.backend.services;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import hn.unah.backend.dtos.ComentarioDto;
 import hn.unah.backend.dtos.LikeDto;
-import hn.unah.backend.dtos.PostDto;
-import hn.unah.backend.dtos.UsuarioDto;
 import hn.unah.backend.models.Comentario;
 import hn.unah.backend.models.Like;
 import hn.unah.backend.models.Post;
@@ -35,20 +31,14 @@ public class LikeService {
     private ComentarioRepository comentarioRepository;
 
     @Autowired
-    private PostService postService;
-
-    @Autowired
-    private ComentarioService comentarioService;
-
-    @Autowired
-    private UsuarioService usuarioService;
+    private DtoMapperService dtoMapperService;
 
     public LikeDto darLikePost(int codigoPost, Usuario usuarioQueDaraLike){
         Like like = likeRepository.findByUsuarioCodigoUsuarioAndPostCodigoPost(usuarioQueDaraLike.getCodigoUsuario(), codigoPost);
 
         if(like != null){
             likeRepository.deleteById(like.getCodigoLike());
-            LikeDto likeDto = aLikeDto(like);
+            LikeDto likeDto = dtoMapperService.aLikeDto(like);
             return likeDto;
         }
 
@@ -60,7 +50,7 @@ public class LikeService {
 
         postLike.getLikes().add(nvoLike);
         postRepository.save(postLike);
-        LikeDto likeDto = aLikeDto(guardado);
+        LikeDto likeDto = dtoMapperService.aLikeDto(guardado);
 
         return likeDto;
     }
@@ -70,7 +60,7 @@ public class LikeService {
 
         if(like != null){
             likeRepository.deleteById(like.getCodigoLike());
-            LikeDto likeDto = aLikeDto(like);
+            LikeDto likeDto = dtoMapperService.aLikeDto(like);
             return likeDto;
         }
 
@@ -82,7 +72,7 @@ public class LikeService {
 
         comentarioLike.getLikes().add(nvoLike);
         comentarioRepository.save(comentarioLike);
-        LikeDto likeDto = aLikeDto(guardado);
+        LikeDto likeDto = dtoMapperService.aLikeDto(guardado);
 
         return likeDto;
     }
@@ -92,7 +82,7 @@ public class LikeService {
 
         if(post != null){
             List<Like> likes = likeRepository.findByPostCodigoPost(codigoPost);
-            return aLikeDtos(likes);
+            return dtoMapperService.aLikeDtos(likes);
         }
 
         return null;
@@ -103,42 +93,10 @@ public class LikeService {
 
         if(comentario != null){
             List<Like> likes = likeRepository.findByComentarioCodigoComentario(codigoComentario);
-            return aLikeDtos(likes);
+            return dtoMapperService.aLikeDtos(likes);
         }
 
         return null;
     }
-
-    public LikeDto aLikeDto(Like like){
-        LikeDto likeDto = new LikeDto();
-        likeDto.setCodigoLike(like.getCodigoLike());
-        likeDto.setFechaLike(like.getFechaLike());
-
-        if(like.getComentario().equals(null)){
-            PostDto postDto = postService.aPostDto(like.getPost());
-            likeDto.setPost(postDto);
-        }else{
-            ComentarioDto comentarioDto = comentarioService.aComentarioDto(like.getComentario());
-            likeDto.setComentario(comentarioDto); 
-        }
-
-        UsuarioDto usuarioDto = usuarioService.usuarioADto(like.getUsuario());
-        likeDto.setUsuario(usuarioDto);
-
-        return likeDto;
-    }
-
-    public List<LikeDto> aLikeDtos(List<Like> likes){
-
-        List<LikeDto> likeDtos = new ArrayList<>();
-
-        for(Like like: likes){
-            LikeDto likeDto = aLikeDto(like);
-            likeDtos.add(likeDto);
-        }
-
-        return likeDtos;
-    }
-
     
 }

@@ -1,16 +1,12 @@
 package hn.unah.backend.services;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import hn.unah.backend.dtos.ComentarioDto;
-import hn.unah.backend.dtos.PostDto;
 import hn.unah.backend.dtos.RepostDto;
-import hn.unah.backend.dtos.UsuarioDto;
 import hn.unah.backend.models.Comentario;
 import hn.unah.backend.models.Post;
 import hn.unah.backend.models.Repost;
@@ -40,10 +36,7 @@ public class RepostService {
     private ComentarioRepository comentarioRepository;
 
     @Autowired
-    private ComentarioService comentarioService;
-
-    @Autowired
-    private PostService postService;
+    private DtoMapperService dtoMapperService;
 
     public RepostDto darRepostAPost(int codigoPost, Usuario usuarioRepostea){
         Post post = postRepository.findById(codigoPost).get();
@@ -58,7 +51,7 @@ public class RepostService {
             post.getReposteos().add(repost);
             postRepository.save(post);
 
-            return aRepostDto(repost);
+            return dtoMapperService.aRepostDto(repost);
         }
 
         return null;
@@ -77,7 +70,7 @@ public class RepostService {
             comentario.getReposteos().add(repost);
             comentarioRepository.save(comentario);
 
-            return aRepostDto(repost);
+            return dtoMapperService.aRepostDto(repost);
         }
 
         return null;
@@ -88,44 +81,10 @@ public class RepostService {
 
         if(usuario != null){
             List<Repost> reposteos = usuario.getReposteos();
-            return aRepostDtos(reposteos);
+            return dtoMapperService.aRepostDtos(reposteos);
         }
 
         return null;
-    }
-
-    public RepostDto aRepostDto(Repost repost){
-        RepostDto repostDto = new RepostDto();
-
-        repostDto.setCodigoReposteo(repost.getCodigoReposteo());
-        repostDto.setFechaReposteo(repost.getFechaReposteo());
-
-        if(repost.getPost().equals(null)){
-            ComentarioDto comentarioDto = new ComentarioDto();
-            comentarioDto.setCodigoComentario(repost.getComentario().getCodigoComentario());
-            repostDto.setComentario(comentarioDto);
-        }else{
-            PostDto postDto = new PostDto();
-            postDto.setCodigoPost(repost.getPost().getCodigoPost());
-            repostDto.setPost(postDto);
-        }
-
-        UsuarioDto usuarioDto = new UsuarioDto();
-        usuarioDto.setId(repost.getUsuario().getCodigoUsuario());
-        repostDto.setUsuario(usuarioDto);
-
-        return repostDto;
-    }
-
-    public List<RepostDto> aRepostDtos(List<Repost> reposts){
-        List<RepostDto> repostDtos = new ArrayList<>();
-        
-        for (Repost repost: reposts) {
-            RepostDto repostDto = aRepostDto(repost);
-            repostDtos.add(repostDto);  
-        }
-
-        return repostDtos;
     }
 
 }

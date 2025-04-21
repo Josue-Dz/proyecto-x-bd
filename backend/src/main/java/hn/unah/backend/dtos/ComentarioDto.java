@@ -21,5 +21,11 @@ public class ComentarioDto {
 
     private UsuarioDto usuarioAutorDto;
 
+    private ComentarioDto comentarioSuperior; 
+
     private List<RepostDto> reposteos;
+
+    private List<LikeDto> likes;
+
+    private List<ComentarioDto> comentarios;
 }

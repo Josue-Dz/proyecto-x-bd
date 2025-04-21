@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import hn.unah.backend.dtos.ComentarioDto;
 import hn.unah.backend.dtos.PostDto;
 import hn.unah.backend.services.PostService;
+import hn.unah.backend.services.UsuarioService;
 
 @RestController
 @RequestMapping("/api/posts")
@@ -22,6 +23,9 @@ public class PostController {
 
     @Autowired
     private PostService postService;
+
+    @Autowired
+    private UsuarioService usuarioService;
 
     @GetMapping("/crearPost")
     public ResponseEntity<PostDto> crearPost(@RequestBody PostDto nvoPost) {
