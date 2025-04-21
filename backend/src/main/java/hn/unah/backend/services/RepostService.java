@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import hn.unah.backend.dtos.RepostDto;
 import hn.unah.backend.models.Comentario;
 import hn.unah.backend.models.Post;
 import hn.unah.backend.models.Repost;
@@ -38,7 +37,7 @@ public class RepostService {
     @Autowired
     private DtoMapperService dtoMapperService;
 
-    public RepostDto darRepostAPost(int codigoPost, Usuario usuarioRepostea){
+    public Repost darRepostAPost(int codigoPost, Usuario usuarioRepostea){
         Post post = postRepository.findById(codigoPost).get();
 
         if(post != null){
@@ -51,13 +50,13 @@ public class RepostService {
             post.getReposteos().add(repost);
             postRepository.save(post);
 
-            return dtoMapperService.aRepostDto(repost);
+            return repost;
         }
 
         return null;
     }
 
-    public RepostDto darRepostAComentario(int codigoComentario, Usuario usuarioRepostea){
+    public Repost darRepostAComentario(int codigoComentario, Usuario usuarioRepostea){
         Comentario comentario = comentarioRepository.findById(codigoComentario).get();
 
         if(comentario != null){
@@ -70,18 +69,18 @@ public class RepostService {
             comentario.getReposteos().add(repost);
             comentarioRepository.save(comentario);
 
-            return dtoMapperService.aRepostDto(repost);
+            return repost;
         }
 
         return null;
     }
     
-    public List<RepostDto> obtenerReposteosPorUsuario(int codigoUsuario){
+    public List<Repost> obtenerReposteosPorUsuario(int codigoUsuario){
         Usuario usuario = usuarioRepository.findById(codigoUsuario).get();
 
         if(usuario != null){
             List<Repost> reposteos = usuario.getReposteos();
-            return dtoMapperService.aRepostDtos(reposteos);
+            return reposteos;
         }
 
         return null;

@@ -16,63 +16,69 @@ public class DtoMapperService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    public PostDto aPostDto(Post post) {
+    public PostDto aPostDto(Post post, Usuario usuario) {
+        UsuarioDto usuarioDto = usuarioADto(post.getUsuarioAutor());
+
         PostDto postDto = new PostDto();
         postDto.setCodigoPost(post.getCodigoPost());
-        postDto.setUsuarioAutor(usuarioADto(post.getUsuarioAutor()));
+        postDto.setUsuarioAutor(usuarioDto);
         postDto.setContenido(post.getContenido());
         postDto.setMultimedia(post.getMultimedia());
         postDto.setFechaPost(post.getFechaPost());
+        postDto.setCantidadLikes(post.getLikes().size());
+        postDto.setCantidadComentarios(post.getComentarios().size());
+        postDto.setCantidadReposteos(post.getReposteos().size());
 
         return postDto;
     }
 
-    public List<PostDto> aPostDtos(List<Post> posts) {
+    public List<PostDto> aPostDtos(List<Post> posts, Usuario usuario) {
         List<PostDto> postDtos = new ArrayList<>();
 
         for (Post post : posts) {
-            PostDto postDto = aPostDto(post);
+            PostDto postDto = aPostDto(post, usuario);
             postDtos.add(postDto);
         }
 
         return postDtos;
     }
 
-    public ComentarioDto aComentarioDto(Comentario comentario) {
+    public ComentarioDto aComentarioDto(Comentario comentario, Usuario usuario) {
+
         ComentarioDto comentarioDto = new ComentarioDto();
         comentarioDto.setCodigoComentario(comentario.getCodigoComentario());
         comentarioDto.setContenido(comentario.getContenido());
-        comentarioDto.setPostDto(aPostDto(comentario.getPost()));
+        comentarioDto.setPostDto(aPostDto(comentario.getPost(), usuario));
         comentarioDto.setUsuarioAutorDto(usuarioADto(comentario.getUsuarioAutor()));
         comentarioDto.setReposteos(aRepostDtos(comentario.getReposteos()));
-        comentarioDto.setLikes(aLikeDtos(comentario.getLikes()));
-        comentarioDto.setComentarios(aComentariosDto(comentario.getRespuestas()));
+        comentarioDto.setLikes(aLikeDtos(comentario.getLikes(), usuario));
+        comentarioDto.setComentarios(aComentariosDto(comentario.getRespuestas(), usuario));
 
         if (comentario.getComentarioSuperior() != null) {
-            comentarioDto.setComentarioSuperior(aComentarioDto(comentario.getComentarioSuperior()));
+            comentarioDto.setComentarioSuperior(aComentarioDto(comentario.getComentarioSuperior(), comentario.getComentarioSuperior().getUsuarioAutor()));
         }
 
         return comentarioDto;
     }
 
-    public List<ComentarioDto> aComentariosDto(List<Comentario> comentarios) {
+    public List<ComentarioDto> aComentariosDto(List<Comentario> comentarios, Usuario usuario) {
         List<ComentarioDto> comentarioDtos = new ArrayList<>();
         for (Comentario comentario : comentarios) {
-            comentarioDtos.add(aComentarioDto(comentario));
+            comentarioDtos.add(aComentarioDto(comentario, usuario));
         }
         return comentarioDtos;
     }
 
-    public LikeDto aLikeDto(Like like){
+    public LikeDto aLikeDto(Like like, Usuario usuario){
         LikeDto likeDto = new LikeDto();
         likeDto.setCodigoLike(like.getCodigoLike());
         likeDto.setFechaLike(like.getFechaLike());
 
         if(like.getComentario() == null){
-            PostDto postDto = aPostDto(like.getPost());
+            PostDto postDto = aPostDto(like.getPost(), usuario);
             likeDto.setPost(postDto);
         }else{
-            ComentarioDto comentarioDto = aComentarioDto(like.getComentario());
+            ComentarioDto comentarioDto = aComentarioDto(like.getComentario(), like.getComentario().getUsuarioAutor());
             likeDto.setComentario(comentarioDto); 
         }
 
@@ -82,12 +88,12 @@ public class DtoMapperService {
         return likeDto;
     }
 
-    public List<LikeDto> aLikeDtos(List<Like> likes){
+    public List<LikeDto> aLikeDtos(List<Like> likes, Usuario usuario){
 
         List<LikeDto> likeDtos = new ArrayList<>();
 
         for(Like like: likes){
-            LikeDto likeDto = aLikeDto(like);
+            LikeDto likeDto = aLikeDto(like, usuario);
             likeDtos.add(likeDto);
         }
 

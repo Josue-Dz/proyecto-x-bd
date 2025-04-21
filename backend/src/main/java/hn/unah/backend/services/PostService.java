@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import hn.unah.backend.dtos.PostDto;
 import hn.unah.backend.models.Post;
 import hn.unah.backend.models.Usuario;
 import hn.unah.backend.repositories.ComentarioRepository;
@@ -32,7 +31,7 @@ public class PostService {
     @Autowired
     private DtoMapperService dtoMapperService;
 
-    public PostDto crearPost(Post post, Usuario usuarioAutor) {
+    public Post crearPost(Post post, Usuario usuarioAutor) {
        
         Post nvoPost = new Post();
         nvoPost.setContenido(post.getContenido());
@@ -42,45 +41,45 @@ public class PostService {
     
         nvoPost = postRepository.save(nvoPost);
 
-        return dtoMapperService.aPostDto(nvoPost);
+        return nvoPost;
 
     }
 
-    public List<PostDto> obtenerTodosLosPosts() {
+    public List<Post> obtenerTodosLosPosts() {
 
         List<Post> posts = postRepository.findAll();
 
-        return dtoMapperService.aPostDtos(posts);
+        return posts;
     }
 
 
-    public PostDto obtenerPostPorId(Integer codigoPost) {
+    public Post obtenerPostPorId(Integer codigoPost) {
         Post post = postRepository.findById(codigoPost).get();
         
         if (post == null) {
             throw new RuntimeException("Post con ID " + codigoPost + " no encontrado");
         }
         
-        return dtoMapperService.aPostDto(post);
+        return post;
     }
 
     public void borrarPostPorId(int codigoPost, int codigoUsuario){
         //ver si este método es necesario
     }
 
-    public List<PostDto> obtenerPostsPorUsuario(Usuario usuario) {
+    public List<Post> obtenerPostsPorUsuario(Usuario usuario) {
 
         // Obtener todos los posts del usuario
         List<Post> listaPost = postRepository.findByUsuarioAutor(usuario);
 
-        return dtoMapperService.aPostDtos(listaPost);
+        return listaPost;
     }
 
-    public List<PostDto> obtenerPostsLikeadosPorUsuario(Usuario usuario){
+    public List<Post> obtenerPostsLikeadosPorUsuario(Usuario usuario){
 
         List<Post> posts = postRepository.findPostsLikedByUsuario(usuario.getCodigoUsuario());
 
-        return dtoMapperService.aPostDtos(posts);
+        return posts;
     }
 
 }

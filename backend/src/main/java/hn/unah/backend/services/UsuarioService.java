@@ -1,7 +1,6 @@
 package hn.unah.backend.services;
 
 import java.time.LocalDate;
-import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +29,7 @@ public class UsuarioService {
     @Autowired
     private DtoMapperService dtoMapperService;
 
-    public UsuarioDto actualizarUsuario(int codigoUsuario, UsuarioDto usuarioDto){
+    public Usuario actualizarUsuario(int codigoUsuario, UsuarioDto usuarioDto){
         Usuario usuario = usuarioRepository.findById(codigoUsuario).get();
 
         if(usuario != null){
@@ -63,9 +62,8 @@ public class UsuarioService {
                 usuario.setFotoPortada(usuarioDto.getFotoPortada());
             }
             
-            this.usuarioRepository.save(usuario);
 
-            UsuarioDto usuarioActualizado = dtoMapperService.usuarioADto(usuario);
+            Usuario usuarioActualizado = this.usuarioRepository.save(usuario);;
   
             return usuarioActualizado;
         }
@@ -73,22 +71,19 @@ public class UsuarioService {
         return null;
     }
 
-    public UsuarioDto obtenerPerfilPorJwt(String jwt){
+    public Usuario obtenerPerfilPorJwt(String jwt){
         String correo = jwtUtils.getEmailFromToken(jwt);
         Usuario usuario = this.usuarioRepository.findByCorreo(correo);
 
-        return dtoMapperService.usuarioADto(usuario);
+        return usuario;
     }
 
 
-    public UsuarioDto usuarioPorId(int codigoUsuario){
+    public Usuario usuarioPorId(int codigoUsuario){
         Usuario usuarioEncontrado = this.usuarioRepository.findById(codigoUsuario).get();
 
         if (usuarioEncontrado != null){
-
-            UsuarioDto usuarioDto = dtoMapperService.usuarioADto(usuarioEncontrado);
-            
-            return usuarioDto;
+            return usuarioEncontrado;
         }
 
         return null;
@@ -96,11 +91,9 @@ public class UsuarioService {
 
     
 
-    public UsuarioDto seguirUsuario(int idUsuarioASeguir, UsuarioDto usuarioSeguidorDto){
+    public Usuario seguirUsuario(int idUsuarioASeguir, UsuarioDto usuarioSeguidorDto){
         Usuario usuarioASeguir = this.usuarioRepository.findById(idUsuarioASeguir).get();
         Usuario usuarioSeguidor = this.usuarioRepository.findById(usuarioSeguidorDto.getId()).get();
-
-        UsuarioDto usuarioASeguirDto = dtoMapperService.usuarioADto(usuarioASeguir);
 
         if (this.seguidorRepository.existsById(new SeguidorId(usuarioSeguidor, usuarioASeguir))){
             
@@ -114,25 +107,16 @@ public class UsuarioService {
             this.seguidorRepository.save(seguidor);
         }
 
-        return usuarioASeguirDto;
+        return usuarioASeguir;
     }
 
 
-    public List<UsuarioDto> buscarUsuario(String filtro){
+    public List<Usuario> buscarUsuario(String filtro){
 
         List<Usuario> usuarios =  this.usuarioRepository.buscarUsuario(filtro);
 
         if (usuarios != null){
-            List<UsuarioDto> usuariosDto = new LinkedList<>();
-
-            for (Usuario usuario : usuarios){
-
-                UsuarioDto usuarioDto = dtoMapperService.usuarioADto(usuario);
-
-                usuariosDto.add(usuarioDto);
-            }
-
-            return usuariosDto;
+            return usuarios;
         }
 
         return null;

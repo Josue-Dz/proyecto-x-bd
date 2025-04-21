@@ -5,7 +5,6 @@ import java.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import hn.unah.backend.dtos.ComentarioDto;
 import hn.unah.backend.models.Comentario;
 import hn.unah.backend.models.Post;
 import hn.unah.backend.models.Usuario;
@@ -32,7 +31,7 @@ public class ComentarioService {
     @Autowired
     private DtoMapperService dtoMapperService;
 
-    public ComentarioDto contestarPost(Comentario comentario, Usuario usuarioAutor) {
+    public Comentario contestarPost(Comentario comentario, Usuario usuarioAutor) {
         
         Post post = postRepository.findById(comentario.getPost().getCodigoPost()).get();
 
@@ -49,7 +48,7 @@ public class ComentarioService {
         // Guardar el comentario en la base de datos
         nvoComentario = comentarioRepository.save(nvoComentario);
 
-        return dtoMapperService.aComentarioDto(nvoComentario);
+        return nvoComentario;
     }
     
 }
