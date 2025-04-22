@@ -23,67 +23,67 @@ import lombok.extern.slf4j.Slf4j;
 @PropertySource("classpath:custom.properties")
 public class JwtUtils {
 
-    @Value("classpath:custom.properties")
+    @Value("${jwt.secret.key}")
     private String secretKey;
 
-    @Value("classpath:custom.properties")
+    @Value("${security.jwt.user.generator}")
     private String userGenerator;
 
-    public String createToken(Authentication authentication){
+    @Value("${jwt.time.expiration}")
+    private long expirationTime;
+
+    public String createToken(Authentication authentication) {
         Algorithm algorithm = Algorithm.HMAC256(this.secretKey);
 
         String correo = authentication.getPrincipal().toString();
         String jwtToken = JWT.create()
-                            .withIssuer(this.userGenerator)
-                            .withSubject(correo)
-                            .withIssuedAt(new Date())
-                            .withExpiresAt(new Date(System.currentTimeMillis() + 1800000))
-                            .withJWTId(UUID.randomUUID().toString())
-                            .withNotBefore(new Date(System.currentTimeMillis()))
-                            .sign(algorithm);
+                .withIssuer(this.userGenerator)
+                .withSubject(correo)
+                .withIssuedAt(new Date())
+                .withExpiresAt(new Date(System.currentTimeMillis() + expirationTime)) // usar valor del .properties
+                .withJWTId(UUID.randomUUID().toString())
+                .withNotBefore(new Date(System.currentTimeMillis()))
+                .sign(algorithm);
 
         return jwtToken;
     }
 
-    public DecodedJWT validateToken(String token){
+    public DecodedJWT validateToken(String token) {
         try {
-
             Algorithm algorithm = Algorithm.HMAC256(this.secretKey);
 
-            JWTVerifier verifier =  JWT.require(algorithm)
-            .withIssuer(this.userGenerator)
-            .build();
+            JWTVerifier verifier = JWT.require(algorithm)
+                    .withIssuer(this.userGenerator)
+                    .build();
 
             DecodedJWT decodedJWT = verifier.verify(token);
             return decodedJWT;
         } catch (JWTVerificationException e) {
+            log.error("Token verification failed: {}", e.getMessage());
             throw new JWTVerificationException("Token invalid, not Authorized");
         }
     }
 
-    public String extractUsername(DecodedJWT decodedJWT){
-        return decodedJWT.getSubject().toString();
+    public String extractUsername(DecodedJWT decodedJWT) {
+        return decodedJWT.getSubject();
     }
 
-    public Claim getClaim(DecodedJWT decodedJWT, String claimName){
+    public Claim getClaim(DecodedJWT decodedJWT, String claimName) {
         return decodedJWT.getClaim(claimName);
     }
 
-    public Map<String, Claim> returnAllClaims(DecodedJWT decodedJWT){
+    public Map<String, Claim> returnAllClaims(DecodedJWT decodedJWT) {
         return decodedJWT.getClaims();
     }
 
     public String getEmailFromToken(String token) {
         try {
-            // Valida el token y obtiene el objeto DecodedJWT
             DecodedJWT decodedJWT = validateToken(token);
-    
-            // Extrae el email (almacenado como "subject")
             return extractUsername(decodedJWT);
         } catch (JWTVerificationException e) {
             log.error("Error al obtener el email del token: {}", e.getMessage());
             throw e;
         }
     }
-
 }
+

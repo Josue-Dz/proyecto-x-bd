@@ -36,13 +36,12 @@ public class UsuarioController {
 
     @GetMapping("/perfil")
     public ResponseEntity<UsuarioDto> obtenerPerfilUsuario(@RequestHeader("Authorization") String jwt) {
-        Usuario usuario = usuarioService.obtenerPerfilPorJwt(jwt);
-
         if (jwt.startsWith("Bearer ")) {
             jwt = jwt.substring(7); // Eliminar los primeros 7 caracteres ("Bearer ")
         }
      
         System.out.println("Estoy aca " + jwt);
+        Usuario usuario = usuarioService.obtenerPerfilPorJwt(jwt);
         UsuarioDto usuarioDto = dtoMapperService.aUsuarioDto(usuario);
 
         return new ResponseEntity<>(usuarioDto, HttpStatus.ACCEPTED);
