@@ -17,7 +17,7 @@ public class DtoMapperService {
     private UsuarioRepository usuarioRepository;
 
     public PostDto aPostDto(Post post, Usuario usuario) {
-        UsuarioDto usuarioDto = usuarioADto(post.getUsuarioAutor());
+        UsuarioDto usuarioDto = aUsuarioDto(post.getUsuarioAutor());
 
         PostDto postDto = new PostDto();
         postDto.setCodigoPost(post.getCodigoPost());
@@ -49,7 +49,7 @@ public class DtoMapperService {
         comentarioDto.setCodigoComentario(comentario.getCodigoComentario());
         comentarioDto.setContenido(comentario.getContenido());
         comentarioDto.setPostDto(aPostDto(comentario.getPost(), usuario));
-        comentarioDto.setUsuarioAutorDto(usuarioADto(comentario.getUsuarioAutor()));
+        comentarioDto.setUsuarioAutorDto(aUsuarioDto(comentario.getUsuarioAutor()));
         comentarioDto.setReposteos(aRepostDtos(comentario.getReposteos()));
         comentarioDto.setLikes(aLikeDtos(comentario.getLikes(), usuario));
         comentarioDto.setComentarios(aComentariosDto(comentario.getRespuestas(), usuario));
@@ -82,7 +82,7 @@ public class DtoMapperService {
             likeDto.setComentario(comentarioDto); 
         }
 
-        UsuarioDto usuarioDto = usuarioADto(like.getUsuario());
+        UsuarioDto usuarioDto = aUsuarioDto(like.getUsuario());
         likeDto.setUsuario(usuarioDto);
 
         return likeDto;
@@ -164,7 +164,7 @@ public class DtoMapperService {
         return repostDtos;
     }
 
-    public UsuarioDto usuarioADto(Usuario usuario){
+    public UsuarioDto aUsuarioDto(Usuario usuario){
         UsuarioDto usuarioDto = new UsuarioDto();
 
         usuarioDto.setId(usuario.getCodigoUsuario());
@@ -180,16 +180,25 @@ public class DtoMapperService {
         usuarioDto.setInformacion(usuario.getInformacion());
         usuarioDto.setUbicacion(usuario.getUbicacion());
         //usuarioDto.setSitioWeb(usuario.getSitioWeb());
-        usuarioDto.setSiguiendo(usuariosAdtos(usuario.getSiguiendo(), false));
-        usuarioDto.setSeguidores(usuariosAdtos(usuario.getSeguidores(), true));
+        usuarioDto.setSiguiendo(aSeguidoresDtos(usuario.getSiguiendo(), false));
+        usuarioDto.setSeguidores(aSeguidoresDtos(usuario.getSeguidores(), true));
 
 
         return usuarioDto;
     }
 
-    
+    public List<UsuarioDto> aUsuariosDtos(List<Usuario> usuarios){
+        List<UsuarioDto> usuarioDtos = new ArrayList<>();
 
-    private List<UsuarioDto> usuariosAdtos(List<Seguidor> seguidores, boolean isSeguidores){
+        for (Usuario usuario : usuarios) {
+            UsuarioDto usuarioDto = aUsuarioDto(usuario);
+            usuarioDtos.add(usuarioDto);
+        }
+
+        return usuarioDtos;
+    }
+
+    public List<UsuarioDto> aSeguidoresDtos(List<Seguidor> seguidores, boolean isSeguidores){
         List<UsuarioDto> listaSeguidores = new ArrayList<>();
         Usuario usuario = new Usuario();
         int codigoUsuario = 0;
