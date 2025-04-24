@@ -29,6 +29,12 @@ public class DtoMapperService {
         postDto.setCantidadComentarios(post.getComentarios().size());
         postDto.setCantidadReposteos(post.getReposteos().size());
 
+        if (post.getComentarios() != null) {
+            postDto.setComentarios(aComentariosDto(post.getComentarios(), usuario));
+        } else {
+            postDto.setComentarios(new ArrayList<>());
+        }
+
         return postDto;
     }
 
@@ -43,12 +49,19 @@ public class DtoMapperService {
         return postDtos;
     }
 
+    private PostDto aPostDtoResumido(Post post) {
+        PostDto postDto = new PostDto();
+        postDto.setCodigoPost(post.getCodigoPost());
+        return postDto;
+    }
+
     public ComentarioDto aComentarioDto(Comentario comentario, Usuario usuario) {
 
         ComentarioDto comentarioDto = new ComentarioDto();
         comentarioDto.setCodigoComentario(comentario.getCodigoComentario());
+        comentarioDto.setFechaComentario(comentario.getFechaComentario());
         comentarioDto.setContenido(comentario.getContenido());
-        comentarioDto.setPostDto(aPostDto(comentario.getPost(), usuario));
+        comentarioDto.setPostDto(aPostDtoResumido(comentario.getPost()));
         comentarioDto.setUsuarioAutorDto(aUsuarioDto(comentario.getUsuarioAutor()));
         comentarioDto.setReposteos(aRepostDtos(comentario.getReposteos()));
         comentarioDto.setLikes(aLikeDtos(comentario.getLikes(), usuario));
@@ -173,7 +186,7 @@ public class DtoMapperService {
         usuarioDto.setCorreo(usuario.getCorreo());
         //usuarioDto.setTelefono(usuario.getTelefono());
         usuarioDto.setFechaNacimiento(usuario.getFechaNacimiento());
-        //usuarioDto.setFechaRegistro(usuario.getFechaRegistro());
+        usuarioDto.setFechaRegistro(usuario.getFechaRegistro());
         usuarioDto.setFotoPerfil(usuario.getFotoPerfil());
         usuarioDto.setFotoPortada(usuario.getFotoPortada());
         usuarioDto.setBiografia(usuario.getBiografia());

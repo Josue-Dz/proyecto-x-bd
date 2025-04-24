@@ -2,6 +2,7 @@ package hn.unah.backend.models;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -74,22 +75,22 @@ public class Usuario {
     private List<Post> posts;
 
     @OneToMany(mappedBy = "id.seguidor", orphanRemoval = true)
-    private List<Seguidor> siguiendo; //Un usuario puede seguir a muchos usuarios
+    private List<Seguidor> siguiendo = new ArrayList<>(); //Un usuario puede seguir a muchos usuarios
 
     @OneToMany(mappedBy = "id.seguido", orphanRemoval = true)
-    private List<Seguidor> seguidores; //Un usuario puede tener muchos seguidores
+    private List<Seguidor> seguidores = new ArrayList<>(); //Un usuario puede tener muchos seguidores
 
     @OneToMany(mappedBy = "usuario", orphanRemoval = true)
-    private List<Like> likes;
+    private List<Like> likes = new ArrayList<>();
 
     @OneToMany(mappedBy = "usuario", orphanRemoval = true)
-    private List<Repost> reposteos;
+    private List<Repost> reposteos = new ArrayList<>();
 
     @OneToMany(mappedBy = "usuarioEmisor", cascade = CascadeType.ALL)
-    private List<Mensaje> mensajesEnviados;
+    private List<Mensaje> mensajesEnviados = new ArrayList<>();
 
     @OneToMany(mappedBy = "usuarioReceptor", cascade = CascadeType.ALL)
-    private List<Mensaje> mensajesRecibidos;
+    private List<Mensaje> mensajesRecibidos = new ArrayList<>();
 
     //agregar private List<Twit> twits;  // y su relacion
     //Faltan campos por definir

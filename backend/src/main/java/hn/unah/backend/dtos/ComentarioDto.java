@@ -1,5 +1,6 @@
 package hn.unah.backend.dtos;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
@@ -16,6 +17,8 @@ public class ComentarioDto {
     private int codigoComentario;
 
     private String contenido;
+
+    private LocalDateTime fechaComentario;
 
     private PostDto postDto;
 

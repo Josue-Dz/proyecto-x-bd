@@ -20,7 +20,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-@Table(name = "likes")
+@Table(name = "likes_posts")
 public class Like {
 
     @Id

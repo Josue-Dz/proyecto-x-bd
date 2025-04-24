@@ -9,13 +9,16 @@ import FmdGoodIcon from '@mui/icons-material/FmdGood';
 import TagFaceIcon from '@mui/icons-material/TagFaces';
 import { useFormik } from 'formik';
 import { useTheme } from '../../context/ThemeContext'
+import * as PostStore from "../../Store/Post";
+import { useDispatch, useSelector } from "react-redux";
 
-
-
-export default function ModaResponder({ open, handleClose }) {
+export default function ModaResponder({ open, handleClose, item }) {
+    console.log("item al renderizar el modal:", item);
     const navigate = useNavigate();
     const [uploadingImage, setUploadingImage] = React.useState(false);
     const [selectedImage, setSelectedImage] = React.useState("");
+    const dispatch = useDispatch();
+    const {auth} = useSelector(store => store);
     const { isDarkMode } = useTheme();
 
     const style = {
@@ -33,8 +36,13 @@ export default function ModaResponder({ open, handleClose }) {
     };
 
     const handleSubmit = (values) => {
-        console.log("submit", values)
-    }
+        const payload = {
+            contenido: values.contenido,
+            multimedia: values.multimedia,
+            codigoPost: values.codigoPost 
+        };
+        dispatch(PostStore.contestarPost(payload));
+    };
 
     const handleSelectImage = (event) => {
         setUploadingImage(true);
@@ -47,11 +55,26 @@ export default function ModaResponder({ open, handleClose }) {
     const formik = useFormik({
         initialValues: {
             contenido: "",
-            imagen: "",
-            postId: 4
+            multimedia: "",
+            codigoPost: item?.codigoPost
         },
+        enableReinitialize: true,
         onSubmit: handleSubmit
     });
+
+
+    const formatearFecha = (fecha) => {
+        const fechaObj = new Date(fecha);
+      
+        return fechaObj.toLocaleString("es-ES", {
+          day: "2-digit",
+          month: "short",
+          year: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+          hour12: false, // Esto asegura que el formato sea de 24 horas
+        });
+      };
 
     return (
         <div>
@@ -66,7 +89,7 @@ export default function ModaResponder({ open, handleClose }) {
                 <Box sx={style}>
                     <div className="flex space-x-5">
                         <Avatar
-                            onClick={() => navigate(`/perfil/${6}`)}
+                            onClick={() => navigate(`/perfil/${item?.usuario?.codigoUsuario}`)}
                             className="cursor-pointer"
                             alt=""
                             src="https://cdn.pixabay.com/photo/2025/01/08/19/02/border-collie-9319990_1280.jpg"
@@ -75,20 +98,20 @@ export default function ModaResponder({ open, handleClose }) {
                         <div className="w-full">
                             <div className="flex justify-between items-center">
                                 <div className="flex items-center space-x-2 cursor-pointer">
-                                    <span className="font-semibold">Test User</span>
+                                    <span className="font-semibold">{auth.user?.nombreCompleto}</span>
                                     <img className="ml-2 w-5 h-5"
                                         alt=""
                                         src="https://upload.wikimedia.org/wikipedia/commons/e/e4/Twitter_Verified_Badge.svg"
                                     />
-                                    <span className="text-gray-600">@testuser . 2m</span>
+                                    <span className="text-gray-600">@{auth.user?.nombreUsuario.toLowerCase()} · {formatearFecha(item?.fechaPost)}</span>
                                 </div>
                             </div>
 
                             <div className="mt-2">
                                 <div>
-                                    <p>Contenido del post</p>
+                                    <p>{item?.contenido}</p>
                                 </div>
-                                <div onClick={() => navigate(`/post/${3}`)}
+                                <div onClick={() => navigate(`/post/${item?.codigoPost}`)}
                                     className="cursor-pointer"
                                 >
                                     <p className="mb-2 p-0"></p>

@@ -1,6 +1,7 @@
 package hn.unah.backend.models;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -50,7 +51,7 @@ public class Comentario {
 
     @OneToMany(mappedBy = "comentario", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
-    private List<Like> likes; //Lista de likes del comentario
+    private List<Like> likes = new ArrayList<>(); //Lista de likes del comentario
 
     @ManyToOne
     @JoinColumn(name = "codigo_post", referencedColumnName = "codigo_post")
@@ -62,9 +63,9 @@ public class Comentario {
 
     @JsonIgnore
     @OneToMany(mappedBy = "comentarioSuperior", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Comentario> respuestas; //Lista de respuestas al comentario
+    private List<Comentario> respuestas = new ArrayList<>(); //Lista de respuestas al comentario
 
     @OneToMany(mappedBy = "comentario", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
-    private List<Repost> reposteos;
+    private List<Repost> reposteos = new ArrayList<>();
 }

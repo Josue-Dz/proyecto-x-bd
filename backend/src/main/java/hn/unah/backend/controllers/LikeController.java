@@ -34,8 +34,12 @@ public class LikeController {
     @Autowired
     private DtoMapperService dtoMapperService;
 
-    @PostMapping("/{codigoPost}/likes")
+    @PostMapping("/{codigoPost}/likePost")
     public ResponseEntity<LikeDto> darleLikeAPost(@PathVariable int codigoPost, @RequestHeader("Authorization") String jwt) {
+        if (jwt.startsWith("Bearer ")) {
+            jwt = jwt.substring(7); // Eliminar los primeros 7 caracteres ("Bearer ")
+        }
+
         Usuario usuario = usuarioService.obtenerPerfilPorJwt(jwt);
         Like like = likeService.darLikePost(codigoPost, usuario);
         LikeDto likeDto = dtoMapperService.aLikeDto(like, usuario);
@@ -43,8 +47,12 @@ public class LikeController {
         return new ResponseEntity<>(likeDto, HttpStatus.CREATED);
     }
 
-    @PostMapping("/{codigoComentario}/likes")
+    @PostMapping("/{codigoComentario}/likeComentario")
     public ResponseEntity<LikeDto> darleLikeAComentario(@PathVariable int codigoComentario, @RequestHeader("Authorization") String jwt) {
+        if (jwt.startsWith("Bearer ")) {
+            jwt = jwt.substring(7); // Eliminar los primeros 7 caracteres ("Bearer ")
+        }
+
         Usuario usuario = usuarioService.obtenerPerfilPorJwt(jwt);
         Like like = likeService.darLikeComentario(codigoComentario, usuario);
         LikeDto likeDto = dtoMapperService.aLikeDto(like, usuario);
@@ -54,6 +62,10 @@ public class LikeController {
 
     @PostMapping("/post/{codigoPost}")
     public ResponseEntity<List<LikeDto>> obtenerTodosLosLikesPorPost(@PathVariable int codigoPost, @RequestHeader("Authorization") String jwt) {
+        if (jwt.startsWith("Bearer ")) {
+            jwt = jwt.substring(7); // Eliminar los primeros 7 caracteres ("Bearer ")
+        }
+
         Usuario usuario = usuarioService.obtenerPerfilPorJwt(jwt);
         List<Like> like = likeService.obtenerTodosLikesPorPost(codigoPost);
         List<LikeDto> likesDtos = dtoMapperService.aLikeDtos(like, usuario);
@@ -61,8 +73,12 @@ public class LikeController {
         return new ResponseEntity<>(likesDtos, HttpStatus.OK);
     }
 
-    @PostMapping("/post/{codigoComentario}")
+    @PostMapping("/comentario/{codigoComentario}")
     public ResponseEntity<List<LikeDto>> obtenerTodosLosLikesPorComentario(@PathVariable int codigoComentario, @RequestHeader("Authorization") String jwt) {
+        if (jwt.startsWith("Bearer ")) {
+            jwt = jwt.substring(7); // Eliminar los primeros 7 caracteres ("Bearer ")
+        }
+        
         Usuario usuario = usuarioService.obtenerPerfilPorJwt(jwt);
         List<Like> like = likeService.obtenerTodosLikesPorComentario(codigoComentario);
         List<LikeDto> likesDtos = dtoMapperService.aLikeDtos(like, usuario);

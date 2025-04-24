@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Avatar, Box, Button, Tab } from '@mui/material';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
@@ -9,11 +9,14 @@ import { TabContext, TabList, TabPanel } from '@mui/lab';
 import ModalPerfil from './ModalPerfil';
 import Post from '../../pages/Post';
 import { useTheme } from '../../context/ThemeContext';
-
-
+import { useDispatch, useSelector } from 'react-redux';
+import { obtenerUsuarioPorId, seguirUsuario } from '../../Store/Auth/Action';
 
 const Perfil = () => {
     const navegar = useNavigate();
+    const dispatch = useDispatch();
+    const {codigoUsuario} = useParams();
+    const {auth} = useSelector(store => store);
     const [tabValue, setTabValue] = useState("1");
     const { isDarkMode } = useTheme();
 
@@ -21,9 +24,15 @@ const Perfil = () => {
     const handleOpenPerfilModal = () => setOpenPerfilModal(true);
     const handleClose = () => setOpenPerfilModal(false);
 
+    useEffect(() => {
+        console.log("Datos de auth.user:", auth.user);
+        dispatch(obtenerUsuarioPorId)
+      }, [auth.user, dispatch]);    
+
     const handleBack = () => navegar(-1);
 
     const handleFollowUser = () => {
+        dispatch(seguirUsuario(codigoUsuario))
         console.log("seguir usuario")
     };
 
@@ -31,14 +40,25 @@ const Perfil = () => {
         setTabValue(newValue);
     };
 
-
+    const formatearFecha = (fecha) => {
+        const fechaObj = new Date(fecha);
+      
+        return fechaObj.toLocaleString("es-ES", {
+          day: "2-digit",
+          month: "short",
+          year: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+          hour12: false, // Esto asegura que el formato sea de 24 horas
+        });
+      };
 
     return (
 
         <div className="">
             <section className={`z-50 flex items-center sticky top-0  ${isDarkMode ? "transparencia-darkmode" : "transparencia-lightmode"}`}>
                 <KeyboardBackspaceIcon className="cursor-pointer" onClick={handleBack} />
-                <h2 className="ml-5 py-5 text-sl font-bold opacity-90">Ronny, José Daniel y Aída</h2>
+                <h2 className="ml-5 py-5 text-sl font-bold opacity-90">{auth.user?.nombreCompleto}</h2>
             </section>
 
             <section>
@@ -80,7 +100,7 @@ const Perfil = () => {
 
                 <div>
                     <div className="flex items-center">
-                        <h2 className="font-bold text-lg">Ronny, José Daniel y Aída</h2>
+                        <h2 className="font-bold text-lg">{auth.user?.nombreCompleto}</h2>
 
                         {
                             true &&
@@ -91,15 +111,13 @@ const Perfil = () => {
                         }
 
                     </div>
-                    <h2 className="text-left text-gray-500">@proyectoBD1</h2>
+                    <h2 className="text-left text-gray-500">@{auth.user?.nombreUsuario.toLowerCase()}</h2>
 
                 </div>
 
                 <div className="mt-2 space-y-3 text-justify">
 
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium alias ducimus dolorum officiis neque obcaecati,
-                        laudantium nisi inventore accusantium in magni illum molestias odio eum amet sint et tempora molestiae.
-                    </p>
+                    <p>{auth.user?.biografia}</p>
 
                     <div className="flex py-1 space-x-5">
                         <div className="flex items-center text-gray-500">
@@ -109,24 +127,24 @@ const Perfil = () => {
 
                         <div className="flex items-center text-gray-500">
                             <LocationOnIcon />
-                            <p className="ml-2">Honduras</p>
+                            <p className="ml-2">{auth.user?.ubicacion}</p>
                         </div>
 
                         <div className="flex items-center text-gray-500">
                             <CalendarMonthIcon />
-                            <p className="ml-2">Se unió el 20 febrero de 2025</p>
+                            <p className="ml-2">{formatearFecha(auth.user?.fechaRegistro)}</p>
                         </div>
                     </div>
 
                     <div className="flex items-center space-x-5">
 
                         <div className="flex items-center space-x-1 font-semibold">
-                            <span>50</span>
+                            <span>{auth.user?.siguiendo?.length}</span>
                             <span className="text-gray-500">Siguiendo</span>
                         </div>
 
                         <div className="flex items-center space-x-1 font-semibold">
-                            <span>10</span>
+                            <span>{auth.user?.seguidores?.length}</span>
                             <span className="text-gray-500">Seguidores</span>
                         </div>
 

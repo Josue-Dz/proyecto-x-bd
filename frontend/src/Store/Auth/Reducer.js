@@ -1,16 +1,4 @@
-import { 
-    LOGIN_USUARIO_REQUEST, 
-    LOGIN_USUARIO_SUCCESS, 
-    LOGIN_USUARIO_FAILURE, 
-    REGISTER_USUARIO_REQUEST, 
-    REGISTER_USUARIO_SUCCESS, 
-    REGISTER_USUARIO_FAILURE, 
-    GET_USUARIO_PERFIL_REQUEST, 
-    GET_USUARIO_PERFIL_SUCCESS, 
-    GET_USUARIO_PERFIL_FAILURE, 
-    LOGOUT
-  } from './ActionType';
-
+import * as ActionTypes from "./ActionType";
 
 const initialState = {
     user: null,
@@ -22,24 +10,24 @@ const initialState = {
 export const authReducer = (state = initialState, action)=>{
     switch (action.type){
 
-        case LOGIN_USUARIO_REQUEST:
-        case REGISTER_USUARIO_REQUEST:
-        case GET_USUARIO_PERFIL_REQUEST:
+        case ActionTypes.LOGIN_USUARIO_REQUEST:
+        case ActionTypes.REGISTER_USUARIO_REQUEST:
+        case ActionTypes.GET_USUARIO_PERFIL_REQUEST:
             return {
                 ...state,
                 loading: true,
                 error: null
             }
   
-        case LOGIN_USUARIO_SUCCESS:
-        case REGISTER_USUARIO_SUCCESS:
+        case ActionTypes.LOGIN_USUARIO_SUCCESS:
+        case ActionTypes.REGISTER_USUARIO_SUCCESS:
             return {
                 ...state,
                 loading: true,
                 error: null
             }
 
-        case GET_USUARIO_PERFIL_SUCCESS:
+        case ActionTypes.GET_USUARIO_PERFIL_SUCCESS:
             return {
                 ...state,
                 loading: false,
@@ -47,12 +35,37 @@ export const authReducer = (state = initialState, action)=>{
                 user: action.payload
             }
 
-        case LOGOUT:
+        case ActionTypes.UPDATE_USUARIO_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                error: null,
+                user: action.payload,
+                updateUser: true
+            }
+
+        case ActionTypes.FIND_USUARIO_BY_ID_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                error: null,
+                findUser: action.payload
+            }
+
+        case ActionTypes.FOLLOW_USUARIO_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                error: null,
+                findUser: action.payload
+            }
+
+        case ActionTypes.LOGOUT:
             return initialState;   
 
-        case LOGIN_USUARIO_FAILURE:
-        case REGISTER_USUARIO_FAILURE:
-        case GET_USUARIO_PERFIL_FAILURE:
+        case ActionTypes.LOGIN_USUARIO_FAILURE:
+        case ActionTypes.REGISTER_USUARIO_FAILURE:
+        case ActionTypes.GET_USUARIO_PERFIL_FAILURE:
             return {
                 ...state,
                 loading: false,

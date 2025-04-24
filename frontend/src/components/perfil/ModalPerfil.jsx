@@ -7,9 +7,12 @@ import { Avatar, IconButton, TextField} from '@mui/material';
 import { useFormik } from 'formik';
 import { useState } from 'react';
 import { useTheme } from '../../context/ThemeContext';
+import { useDispatch, useSelector } from 'react-redux';
+import { actualizarUsuario } from '../../Store/Auth/Action';
 
 
 export default function ModalPerfil({ open, handleClose }) {
+    const dispatch = useDispatch();
     const [uploading, setUploading] = useState(false);
     const { isDarkMode } = useTheme();
 
@@ -28,6 +31,7 @@ export default function ModalPerfil({ open, handleClose }) {
     };
 
     const handleSubmit = (values) => {
+        dispatch(actualizarUsuario(values))
         console.log("Submit", values);
     }
 

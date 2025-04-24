@@ -32,9 +32,9 @@ const PaginaPrincipal = ({setIsAuthenticated}) => {
         <Routes>
           <Route path="/" element={<Feed />}></Route>
           <Route path="/inicio" element={<Feed />}></Route>
-          <Route path="/perfil/:id" element={<Perfil />}></Route>
-          <Route path="/post/:id" element={<DetallesPost />}></Route>
-          <Route path="/post/:id" element={<DetallesPost />}></Route>
+          <Route path="/perfil/:codigoUsuario" element={<Perfil />}></Route>
+          <Route path="/post/:codigoPost" element={<DetallesPost />}></Route>
+          <Route path="/post/:codigoPost" element={<DetallesPost />}></Route>
           <Route path="/explorar" element={<Explorar />}></Route>
           <Route path="/notificaciones" element={<Notificaciones />}></Route>
           <Route path="/mensajes" element={<Mensajes />}></Route>
@@ -52,8 +52,8 @@ const PaginaPrincipal = ({setIsAuthenticated}) => {
           <Route path="/mensajes" element={<VerChat />}></Route>
           <Route path="/comunidades" element={<Tendencias />}></Route>
           <Route path="/premium" element={<Tendencias />}></Route>
-          <Route path="/perfil/:id" element={<Tendencias />}></Route>
-          <Route path="/post/:id" element={<Tendencias />}></Route>
+          <Route path="/perfil/:codigoUsuario" element={<Tendencias />}></Route>
+          <Route path="/post/:codigoPost" element={<Tendencias />}></Route>
           <Route path="/mas" element={<Tendencias />}></Route>
 
         </Routes>

@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import hn.unah.backend.dtos.ComentarioPostRequest;
 import hn.unah.backend.models.Comentario;
 import hn.unah.backend.models.Post;
 import hn.unah.backend.models.Usuario;
@@ -31,12 +32,12 @@ public class ComentarioService {
     @Autowired
     private DtoMapperService dtoMapperService;
 
-    public Comentario contestarPost(Comentario comentario, Usuario usuarioAutor) {
+    public Comentario contestarPost(ComentarioPostRequest comentario, Usuario usuarioAutor) {
         
-        Post post = postRepository.findById(comentario.getPost().getCodigoPost()).get();
+        Post post = postRepository.findById(comentario.getCodigoPost()).get();
 
         if (post == null) {
-            throw new RuntimeException("Post con ID " + comentario.getPost().getCodigoPost() + " no encontrado");
+            throw new RuntimeException("Post con ID " + comentario.getCodigoPost() + " no encontrado");
         }
             
         Comentario nvoComentario = new Comentario();
@@ -47,6 +48,8 @@ public class ComentarioService {
 
         // Guardar el comentario en la base de datos
         nvoComentario = comentarioRepository.save(nvoComentario);
+        post.getComentarios().add(nvoComentario);
+        postRepository.save(post);
 
         return nvoComentario;
     }

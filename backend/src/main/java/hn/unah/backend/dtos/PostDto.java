@@ -38,4 +38,8 @@ public class PostDto {
     private int cantidadReposteos;
 
     private Integer codigoComunidad; 
+
+    private boolean isLiked;
+
+    private boolean isRepost;
 }

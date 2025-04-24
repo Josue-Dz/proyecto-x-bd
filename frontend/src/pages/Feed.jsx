@@ -1,9 +1,11 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Avatar, Button, Tab, Box } from '@mui/material'
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import Post from './Post';
+import * as PostStore from "../Store/Post";
+//import * as Upload from "../Utils";
 
 import BrokenImageOutlinedIcon from '@mui/icons-material/BrokenImageOutlined';
 import GifBoxOutlinedIcon from '@mui/icons-material/GifBoxOutlined';
@@ -13,34 +15,45 @@ import EmojiEmotionsOutlinedIcon from '@mui/icons-material/EmojiEmotionsOutlined
 import CalendarTodayOutlinedIcon from '@mui/icons-material/CalendarTodayOutlined';
 import FmdGoodOutlinedIcon from '@mui/icons-material/FmdGoodOutlined';
 import { useTheme } from '../context/ThemeContext'
+import { useDispatch, useSelector } from 'react-redux';
 
 const validationSchema = Yup.object().shape({
-    content:Yup.string().required("El texto para el post es obligatorio"),
+    contenido:Yup.string().required("El texto para el post es obligatorio"),
 })
 
 const Feed = () => {
 
     const [uploadingImage, setUploadingImage] = useState(false);
     const [selectImage, setSelectedImage] = useState("");
+    const dispatch = useDispatch();
+    const {post} = useSelector(store => store);
+    console.log("post: ", post);
     const [tabValue, setTabValue] = useState("1");
     const { isDarkMode } = useTheme();
 
-    const handleSubmit = (values) =>{
-        console.log("values ", values)
-    }
+    const handleSubmit = (values, actions) =>{
+        console.log("Formulario enviado con los siguientes valores:", values);
+        dispatch(PostStore.crearPost(values));
+        actions.resetForm();
+    };
+    
+    useEffect(() => {
+        dispatch(PostStore.obtenerTodosLosPost())
+    }, [dispatch, post.like, post.repost]) //detalle 1:17:00
 
     const formik = useFormik({
         initialValues:{
-            content:"",
-            image:""
+            contenido:"",
+            multimedia:""
         },
-        onSubmit:handleSubmit
-    })
+        onSubmit:handleSubmit,
+        validationSchema,
+    });
 
     const handleSelectImage = (event) => {
         setUploadingImage(true);
-        const imgUrl = event.target.files[0];
-        formik.setFieldValue("image", imgUrl);
+        const imgUrl = event.target.files[0]; //await Upload.uploadToCloudinary(event.target.files[0])
+        formik.setFieldValue("multimedia", imgUrl);
         setSelectedImage(imgUrl);
         setUploadingImage(false);
     }
@@ -107,10 +120,10 @@ const Feed = () => {
                                 <div className="border-b border-gray-300 pb-2">
                                 <input
                                     type="text"
-                                    name="content"
+                                    name="contenido"
                                     placeholder="¿Qué está pasando?"
                                     className="w-full border-none outline-none text-lg bg-transparent"
-                                    {...formik.getFieldProps("content")}
+                                    {...formik.getFieldProps("contenido")}
                                 />
                                 {formik.errors.content && formik.touched.content && (
                                     <span className="text-red-500">{formik.errors.content}</span>
@@ -151,22 +164,25 @@ const Feed = () => {
                                     }}
                                     variant="contained"
                                     type="submit"
-                                    disabled={!formik.values.content}
+                                    disabled={!formik.values.contenido}
                                 >
                                     Postear
                                 </Button>
                                 </div>
                             </form>
+                                {/* 
+                                <div>
+                                    {selectImage && <img src={selectImage} alt=""/>}
+                                </div> 
+                                */}
                             </div>
                         </div>
                         </section>
 
                         <section>
-                            {[1,1,1,1,1].map((item)=> <Post/>)}
+                            {post.posts.map((item)=> <Post item = {item} />)}
                         </section>
                     </TabPanel>
-
-                    <TabPanel value="2">Siguiendo</TabPanel>
                 </TabContext>
             </Box>
         </section>
