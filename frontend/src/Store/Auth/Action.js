@@ -95,7 +95,7 @@ export const obtenerUsuarioPorId = (codigoUsuario) => async (dispatch) => {
             payload: data
         })
     }catch (error) {
-        console.log("error", error);
+        console.log("error al obtener usuario: ", error);
         dispatch({
             type: FIND_USUARIO_BY_ID_FAILURE,
             payload: error.message

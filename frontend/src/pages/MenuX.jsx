@@ -40,6 +40,8 @@ const MenuX = ({ setOpenModal, setIsAuthenticated }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
 
+  console.log("auth.user: ", auth.user);
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -80,7 +82,7 @@ const MenuX = ({ setOpenModal, setIsAuthenticated }) => {
                   if (item.title === "Premium" || item.title === "Grok" || item.title === "Organizaciones Verificadas") {
                     setOpenModal(true); 
                   } else if (item.title === "Perfil") {
-                    navigate(`/perfil/${5}`);
+                    navigate(`/perfil/${auth.user?.id}`);
                   } else {
                     navigate(item.path);
                   }
@@ -115,7 +117,7 @@ const MenuX = ({ setOpenModal, setIsAuthenticated }) => {
         <div className="flex items-center space-x-3">
           <Avatar
             alt="username"
-            src="https://i.pinimg.com/736x/95/78/83/9578835cc8ee0e2dc3e7a7cc265ea994.jpg"
+            src={auth.user?.fotoPerfil}
           />
         </div>
 

@@ -89,10 +89,10 @@ export default function ModaResponder({ open, handleClose, item }) {
                 <Box sx={style}>
                     <div className="flex space-x-5">
                         <Avatar
-                            onClick={() => navigate(`/perfil/${item?.usuario?.codigoUsuario}`)}
+                            onClick={() => navigate(`/perfil/${item?.usuarioAutor?.codigoUsuario}`)}
                             className="cursor-pointer"
                             alt=""
-                            src="https://cdn.pixabay.com/photo/2025/01/08/19/02/border-collie-9319990_1280.jpg"
+                            src={item?.usuarioAutor?.fotoPerfil}
                         />
 
                         <div className="w-full">
@@ -124,7 +124,7 @@ export default function ModaResponder({ open, handleClose, item }) {
                         <div className="flex space-x-5">
                             <Avatar
                                 alt=""
-                                src="https://cdn.pixabay.com/photo/2025/01/08/19/02/border-collie-9319990_1280.jpg"
+                                src={auth.user?.fotoPerfil}
                             />
 
                             <div className="w-full">

@@ -77,10 +77,10 @@ const Post = ({item}) => {
     <React.Fragment className=" pb-6 hover:bg-gray-100 ">
       <div className="flex content-start p-3 ">
         <Avatar
-          onClick={() => navigate(`/perfil/${item?.usuario?.codigoUsuario}`)}
+          onClick={() => navigate(`/perfil/${item?.usuarioAutor?.codigoUsuario}`)}
           className="cursor-pointer"
           alt="username"
-          src="https://i.pinimg.com/736x/95/78/83/9578835cc8ee0e2dc3e7a7cc265ea994.jpg"
+          src={item?.usuarioAutor?.fotoPerfil}
         />
         <div className="flex flex-col  items-start cursor-pointer ml-2  ">
           <div className="font-semibold  flex items-center justify-evenly">

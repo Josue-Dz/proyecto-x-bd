@@ -11,12 +11,13 @@ import Post from '../../pages/Post';
 import { useTheme } from '../../context/ThemeContext';
 import { useDispatch, useSelector } from 'react-redux';
 import { obtenerUsuarioPorId, seguirUsuario } from '../../Store/Auth/Action';
+import { obtenerPostsPorUsuario } from '../../Store/Post';
 
 const Perfil = () => {
     const navegar = useNavigate();
     const dispatch = useDispatch();
     const {codigoUsuario} = useParams();
-    const {auth} = useSelector(store => store);
+    const {auth, post} = useSelector(store => store);
     const [tabValue, setTabValue] = useState("1");
     const { isDarkMode } = useTheme();
 
@@ -25,9 +26,12 @@ const Perfil = () => {
     const handleClose = () => setOpenPerfilModal(false);
 
     useEffect(() => {
-        console.log("Datos de auth.user:", auth.user);
-        dispatch(obtenerUsuarioPorId)
-      }, [auth.user, dispatch]);    
+        console.log("codigo usuario: ", codigoUsuario);
+        dispatch(obtenerUsuarioPorId(codigoUsuario))
+        dispatch(obtenerPostsPorUsuario(codigoUsuario))
+        console.log("Datos de obtenerUsuarioPorId:", auth.obtenerUsuarioPorId);
+        console.log("Datos de obtenerPostsPorUsuario:", auth.obtenerPostsPorUsuario);
+      }, [codigoUsuario, dispatch, auth]);    
 
     const handleBack = () => navegar(-1);
 
@@ -63,13 +67,13 @@ const Perfil = () => {
 
             <section>
                 <img className="w-[100%] h-[15rem] object-cover"
-                    src="https://cdn.pixabay.com/photo/2021/09/06/20/12/cat-6602447_1280.jpg" alt="" />
+                    src={auth.user?.fotoPortada} alt="" />
             </section>
 
             <section className="pl-6">
                 <div className="mt-5 flex justify-between items-start h-[5rem]">
                     <Avatar className="transform -translate-y-24"
-                        src="https://i.pinimg.com/736x/95/78/83/9578835cc8ee0e2dc3e7a7cc265ea994.jpg"
+                        src={auth.user?.fotoPerfil}
                         alt=''
                         sx={{ width: "10rem", height: "10rem", border: "4px solid white" }}
                     />
@@ -117,7 +121,7 @@ const Perfil = () => {
 
                 <div className="mt-2 space-y-3 text-justify">
 
-                    <p>{auth.user?.biografia}</p>
+                    <p>{auth.obtenerUsuarioPorId?.biografia}</p>
 
                     <div className="flex py-1 space-x-5">
                         <div className="flex items-center text-gray-500">
@@ -243,7 +247,7 @@ const Perfil = () => {
                             </TabList>
                         </Box>
                         <TabPanel value="1">
-                            {[1, 1, 1, 1].map((item) => <Post />)}
+                            {post?.posts?.map((item) => <Post item = {item}/>)}
                         </TabPanel>
                         <TabPanel value="2">Respuestas</TabPanel>
                         <TabPanel value="3">Destacados</TabPanel>

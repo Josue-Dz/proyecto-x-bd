@@ -13,6 +13,7 @@ import { actualizarUsuario } from '../../Store/Auth/Action';
 
 export default function ModalPerfil({ open, handleClose }) {
     const dispatch = useDispatch();
+    const {auth} = useSelector(store => store);
     const [uploading, setUploading] = useState(false);
     const { isDarkMode } = useTheme();
 
@@ -98,7 +99,7 @@ export default function ModalPerfil({ open, handleClose }) {
                                 <div className="w-full">
                                     <div className="relative">
                                         <img className="w-full h-[12rem] object-cover object-center"
-                                            src="https://cdn.pixabay.com/photo/2021/09/06/20/12/cat-6602447_1280.jpg"
+                                            src={auth.user?.fotoPortada}
                                             alt="Imagen de portada del perfil"
                                         />
                                         <input
@@ -114,7 +115,7 @@ export default function ModalPerfil({ open, handleClose }) {
                                     <div className="relative">
                                         <Avatar
                                             sx={{ width: "10rem", height: "10rem", border: "4px solid white" }}
-                                            src="https://i.pinimg.com/736x/95/78/83/9578835cc8ee0e2dc3e7a7cc265ea994.jpg"
+                                            src={auth.user?.fotoPerfil}
                                             alt="Imagen del perfil"
                                         />
                                         <input

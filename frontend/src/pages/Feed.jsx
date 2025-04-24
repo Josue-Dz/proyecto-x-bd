@@ -26,7 +26,7 @@ const Feed = () => {
     const [uploadingImage, setUploadingImage] = useState(false);
     const [selectImage, setSelectedImage] = useState("");
     const dispatch = useDispatch();
-    const {post} = useSelector(store => store);
+    const {auth, post} = useSelector(store => store);
     console.log("post: ", post);
     const [tabValue, setTabValue] = useState("1");
     const { isDarkMode } = useTheme();
@@ -111,7 +111,7 @@ const Feed = () => {
                         <div className="flex items-start space-x-3">
                             <Avatar
                             alt="username"
-                            src="https://i.pinimg.com/736x/95/78/83/9578835cc8ee0e2dc3e7a7cc265ea994.jpg"
+                            src={auth.user?.fotoPerfil}
                             className="w-12 h-12"
                             />
 
