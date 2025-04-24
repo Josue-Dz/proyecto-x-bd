@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { Avatar, Button, Menu, MenuItem } from "@mui/material";
@@ -18,6 +18,10 @@ import * as PostStore from "../Store/Post";
 
 const Post = ({item}) => {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    console.log("Datos de item:", item);
+  }, [item]);
 
   const {auth} = useSelector(store => store);
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -80,13 +84,13 @@ const Post = ({item}) => {
         />
         <div className="flex flex-col  items-start cursor-pointer ml-2  ">
           <div className="font-semibold  flex items-center justify-evenly">
-            <span className="mr-0.5">{auth.user?.nombreCompleto}</span>
+            <span className="mr-0.5">{item?.usuarioAutor?.nombreCompleto}</span>
             <img
               className="w-4 h-4 mr-1"
               src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Twitter_Verified_Badge.svg/512px-Twitter_Verified_Badge.svg.png?20230807021642"
               alt=""
             />
-            <span className="font-normal text-gray-600 text-sm">@{auth.user?.nombreUsuario.toLowerCase()} · {fechaFormateada}</span>
+            <span className="font-normal text-gray-600 text-sm">@{item?.usuarioAutor?.nombreUsuario.toLowerCase()} · {fechaFormateada}</span>
           </div>
           <p className="mb-2 p-0">
             {item?.contenido}
